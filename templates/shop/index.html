@@ -3,7 +3,7 @@
 {% block content %}
 <div class="slider-area">
 <div class="slider-active owl-dot-style owl-carousel">
-<div class="single-slider pt-215 pb-228 bg-img" style="background-image:url(/static/shop/img/slider/slider-2.jpg);">
+<div class="single-slider pt-215 pb-228 bg-img" style="background-image:url('{% static 'shop/img/slider/slider-2.jpg' %}');">
     <div class="container">
         <div class="slider-content slider-content-white slider-animated-2 text-center">
             <h3 class="animated">We keep pets for pleasure.</h3>
@@ -14,7 +14,7 @@
         </div>
     </div>
 </div>
-<div class="single-slider pt-215 pb-228 bg-img" style="background-image:url(/static/shop/img/slider/slider-3.jpg);">
+<div class="single-slider pt-215 pb-228 bg-img" style="background-image:url('{% static 'shop/img/slider/slider-3.jpg' %}');">
     <div class="container">
         <div class="slider-content slider-content-white slider-animated-2 text-center">
             <h3 class="animated">We keep pets for pleasure.</h3>
@@ -310,7 +310,7 @@
 <div class="row">
     <div class="col-lg-6 col-md-6">
         <div class="deal-img wow fadeInLeft">
-            <a href="#"><img src="{% static 'shop/img/banner/banner-2.png' %}" alt=""></a>
+            <a href="#"><img src="{% static 'shop/img/banners/banner-2.png' %}" alt=""></a>
         </div>
     </div>
     <div class="col-lg-6 col-md-6">
@@ -332,7 +332,7 @@
 </div>
 </div>
 </div>
-<div class="testimonial-area pt-90 pb-70 bg-img" style="background-image:url('/static/shop/img/banner/banner-1.jpg');">
+<div class="testimonial-area pt-90 pb-70 bg-img" style="background-image:url('{% static 'shop/img/slider/slider-3.jpg' %}');">
 <div class="container">
 <div class="row">
     <div class="col-lg-10 ml-auto mr-auto">

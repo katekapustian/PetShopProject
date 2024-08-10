@@ -1,7 +1,7 @@
 {% extends "shop/base.html" %}
 {% load static %}
 {% block content %}
-<div class="breadcrumb-area pt-95 pb-95 bg-img" style="background-image:url(assets/img/banner/banner-2.jpg);">
+<div class="breadcrumb-area pt-95 pb-95 bg-img" style="background-image:url('{% static 'shop/img/banners/banner-2.jpg' %}');">
 <div class="container">
 <div class="breadcrumb-content text-center">
     <h2>About Us</h2>
@@ -17,7 +17,7 @@
 <div class="row">
     <div class="col-lg-6 col-md-6">
         <div class="about-us-img pr-30 wow fadeInLeft">
-            <img alt="" src="assets/img/banner/banner-3.png">
+            <img alt="" src="{% static 'shop/img/banners/banner-3.png' %}">
         </div>
     </div>
     <div class="col-lg-6 col-md-6 d-flex align-items-center">
@@ -69,7 +69,7 @@
 </div>
 </div>
 </div>
-<div class="testimonial-area pt-90 pb-70 bg-img" style="background-image:url(assets/img/banner/banner-1.jpg);">
+<div class="testimonial-area pt-90 pb-70 bg-img" style="background-image:url('{% static 'shop/img/slider/slider-3.jpg' %}');">
 <div class="container">
 <div class="row">
     <div class="col-lg-10 ml-auto mr-auto">
@@ -90,28 +90,28 @@
             </div>
             <div class="testimonial-image-slider text-center">
                 <div class="sin-testiImage">
-                    <img src="assets/img/testi/3.jpg" alt="">
+                    <img src="{% static 'shop/img/testi/3.jpg' %}" alt="">
                     <h3>Samia Robiul</h3>
                     <h5>Customer</h5>
                 </div>
                 <div class="sin-testiImage">
-                    <img src="assets/img/testi/4.jpg" alt="">
+                    <img src="{% static 'shop/img/testi/4.jpg' %}" alt="">
                     <h3>Samia Robiul</h3>
                     <h5>Customer</h5>
                 </div>
                 <div class="sin-testiImage">
-                    <img src="assets/img/testi/3.jpg" alt="">
+                    <img src="{% static 'shop/img/testi/3.jpg' %}" alt="">
                     <h3>F H Shuvo</h3>
                     <h5>Developer</h5>
                 </div>
                 <div class="sin-testiImage">
-                    <img src="assets/img/testi/5.jpg" alt="">
+                    <img src="{% static 'shop/img/testi/5.jpg' %}" alt="">
                     <h3>T T Rayed</h3>
                     <h5>CEO</h5>
                 </div>
             </div>
             <div class="testimonial-shap">
-                <img src="assets/img/icon-img/testi-shap.png" alt="">
+                <img src="{% static 'shop/img/icon-img/testi-shap.png' %}" alt="">
             </div>
         </div>
     </div>
@@ -129,7 +129,7 @@
         <div class="team-wrapper mb-30">
             <div class="team-img">
                 <a href="#">
-                    <img src="assets/img/team/team-1.jpg" alt="">
+                    <img src="{% static 'shop/img/team/team-1.jpg' %}" alt="">
                 </a>
                 <div class="team-social">
                     <a href="#">
@@ -156,7 +156,7 @@
         <div class="team-wrapper mb-30">
             <div class="team-img">
                 <a href="#">
-                    <img src="assets/img/team/team-2.jpg" alt="">
+                    <img src="{% static 'shop/img/team/team-2.jpg' %}" alt="">
                 </a>
                 <div class="team-social">
                     <a href="#">
@@ -183,7 +183,7 @@
         <div class="team-wrapper mb-30">
             <div class="team-img">
                 <a href="#">
-                    <img src="assets/img/team/team-3.jpg" alt="">
+                    <img src="{% static 'shop/img/team/team-3.jpg' %}" alt="">
                 </a>
                 <div class="team-social">
                     <a href="#">
@@ -210,7 +210,7 @@
         <div class="team-wrapper mb-30">
             <div class="team-img">
                 <a href="#">
-                    <img src="assets/img/team/team-4.jpg" alt="">
+                    <img src="{% static 'shop/img/team/team-4.jpg' %}" alt="">
                 </a>
                 <div class="team-social">
                     <a href="#">

@@ -1,7 +1,7 @@
 {% extends "shop/base.html" %}
 {% load static %}
 {% block content %}
-<div class="breadcrumb-area pt-95 pb-95 bg-img" style="background-image:url(assets/img/banner/banner-2.jpg);">
+<div class="breadcrumb-area pt-95 pb-95 bg-img" style="background-image:url('{% static 'shop/img/banners/banner-2.jpg' %}');">
 <div class="container">
 <div class="breadcrumb-content text-center">
     <h2>Blog Left sidebar</h2>
@@ -20,7 +20,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="blog-wrapper mb-30 gray-bg">
                     <div class="blog-img hover-effect">
-                        <a href="blog-details.html"><img alt="" src="assets/img/blog/blog-4.jpg"></a>
+                        <a href="blog-details.html"><img alt="" src="{% static 'shop/img/blog/blog-1.jpg' %}"></a>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
@@ -36,7 +36,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="blog-wrapper mb-30 gray-bg">
                     <div class="blog-img hover-effect">
-                        <a href="blog-details.html"><img alt="" src="assets/img/blog/blog-5.jpg"></a>
+                        <a href="blog-details.html"><img alt="" src="{% static 'shop/img/blog/blog-2.jpg' %}"></a>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
@@ -52,7 +52,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="blog-wrapper mb-30 gray-bg">
                     <div class="blog-img hover-effect">
-                        <a href="blog-details.html"><img alt="" src="assets/img/blog/blog-6.jpg"></a>
+                        <a href="blog-details.html"><img alt="" src="{% static 'shop/img/blog/blog-3.jpg' %}"></a>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
@@ -68,7 +68,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="blog-wrapper mb-30 gray-bg">
                     <div class="blog-img hover-effect">
-                        <a href="blog-details.html"><img alt="" src="assets/img/blog/blog-7.jpg"></a>
+                        <a href="blog-details.html"><img alt="" src="{% static 'shop/img/blog/blog-4.jpg' %}"></a>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
@@ -84,7 +84,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="blog-wrapper mb-30 gray-bg">
                     <div class="blog-img hover-effect">
-                        <a href="blog-details.html"><img alt="" src="assets/img/blog/blog-8.jpg"></a>
+                        <a href="blog-details.html"><img alt="" src="{% static 'shop/img/blog/blog-5.jpg' %}"></a>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
@@ -100,7 +100,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="blog-wrapper mb-30 gray-bg">
                     <div class="blog-img hover-effect">
-                        <a href="blog-details.html"><img alt="" src="assets/img/blog/blog-9.jpg"></a>
+                        <a href="blog-details.html"><img alt="" src="{% static 'shop/img/blog/blog-6.jpg' %}"></a>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
@@ -116,7 +116,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="blog-wrapper mb-30 gray-bg">
                     <div class="blog-img hover-effect">
-                        <a href="blog-details.html"><img alt="" src="assets/img/blog/blog-10.jpg"></a>
+                        <a href="blog-details.html"><img alt="" src="{% static 'shop/img/blog/blog-7.jpg' %}"></a>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
@@ -132,7 +132,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="blog-wrapper mb-30 gray-bg">
                     <div class="blog-img hover-effect">
-                        <a href="blog-details.html"><img alt="" src="assets/img/blog/blog-4.jpg"></a>
+                        <a href="blog-details.html"><img alt="" src="{% static 'shop/img/blog/blog-8.jpg' %}"></a>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
@@ -239,7 +239,7 @@
                 <div class="recent-post-wrapper mt-25">
                     <div class="single-recent-post mb-20">
                         <div class="recent-post-img">
-                            <a href="#"><img src="assets/img/blog/blog-s1.jpg" alt=""></a>
+                            <a href="#"><img src="{% static 'shop/img/blog/blog-1.jpg' %}" alt=""></a>
                         </div>
                         <div class="recent-post-content">
                             <h4><a href="#">My Dog, Aren</a></h4>
@@ -248,7 +248,7 @@
                     </div>
                     <div class="single-recent-post mb-20">
                         <div class="recent-post-img">
-                            <a href="#"><img src="assets/img/blog/blog-s2.jpg" alt=""></a>
+                            <a href="#"><img src="{% static 'shop/img/blog/blog-2.jpg' %}" alt=""></a>
                         </div>
                         <div class="recent-post-content">
                             <h4><a href="#">My Dog, Tomy</a></h4>
@@ -257,7 +257,7 @@
                     </div>
                     <div class="single-recent-post">
                         <div class="recent-post-img">
-                            <a href="#"><img src="assets/img/blog/blog-s3.jpg" alt=""></a>
+                            <a href="#"><img src="{% static 'shop/img/blog/blog-3.jpg' %}" alt=""></a>
                         </div>
                         <div class="recent-post-content">
                             <h4><a href="#">My Dog, Suju</a></h4>

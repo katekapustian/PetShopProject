@@ -1,7 +1,7 @@
 {% extends "shop/base.html" %}
 {% load static %}
 {% block content %}
-<div class="breadcrumb-area pt-95 pb-95 bg-img" style="background-image:url(assets/img/banner/banner-2.jpg);">
+<div class="breadcrumb-area pt-95 pb-95 bg-img" style="background-image:url('{% static 'shop/img/banners/banner-2.jpg' %}');">
 <div class="container">
 <div class="breadcrumb-content text-center">
     <h2>Wishlist</h2>
@@ -34,7 +34,7 @@
                     <tbody>
                         <tr>
                             <td class="product-thumbnail">
-                                <a href="#"><img src="assets/img/cart/cart-3.jpg" alt=""></a>
+                                <a href="#"><img src="{% static 'shop/img/cart/cart-3.jpg' %}" alt=""></a>
                             </td>
                             <td class="product-name"><a href="#">Dry Dog Food</a></td>
                             <td class="product-price-cart"><span class="amount">$110.00</span></td>
@@ -50,7 +50,7 @@
                         </tr>
                         <tr>
                             <td class="product-thumbnail">
-                                <a href="#"><img src="assets/img/cart/cart-4.jpg" alt=""></a>
+                                <a href="#"><img src="{% static 'shop/img/cart/cart-4.jpg' %}" alt=""></a>
                             </td>
                             <td class="product-name"><a href="#">Cat Buffalo Food</a></td>
                             <td class="product-price-cart"><span class="amount">$150.00</span></td>
@@ -66,7 +66,7 @@
                         </tr>
                         <tr>
                             <td class="product-thumbnail">
-                                <a href="#"><img src="assets/img/cart/cart-5.jpg" alt=""></a>
+                                <a href="#"><img src="{% static 'shop/img/cart/cart-5.jpg' %}" alt=""></a>
                             </td>
                             <td class="product-name"><a href="#">Legacy Dog Food</a></td>
                             <td class="product-price-cart"><span class="amount">$170.00</span></td>
