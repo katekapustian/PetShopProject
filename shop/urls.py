@@ -1,12 +1,18 @@
 from django.urls import path
 from . import views
+from .views import logout_view, update_account, update_address
 
 urlpatterns = [
     path('', views.index, name='index'),
     path('about-us/', views.about_us, name='about_us'),
     path('contact/', views.contact, name='contact'),
     path('login-register/', views.login_register, name='login_register'),
+    path('register/', views.register, name='register'),
+    path('login/', views.login, name='login'),
+    path('logout/', logout_view, name='logout'),
     path('my-account/', views.my_account, name='my_account'),
+    path('update-account/', update_account, name='update_account'),
+    path('update-address/', update_address, name='update_address'),
     path('shop-page/', views.shop_page, name='shop_page'),
     path('shop-page/<str:category_type>/<slug:category_slug>/', views.shop_page, name='shop_page_by_category'),
     path('shop-list/', views.shop_list, name='shop_list'),

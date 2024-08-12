@@ -31,7 +31,11 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="welcome-area">
-                            <p>Default welcome msg! </p>
+                            {% if user.is_authenticated %}
+                                <p>Welcome to our shop, {{ user.username }} ♡</p>
+                            {% else %}
+                                <p>Welcome to our shop ♡</p>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-8 col-12">
@@ -72,76 +76,42 @@
                             <nav>
                                 <ul>
                                     <li><a href="{% url 'index' %}">HOME</a></li>
-                                    <li class="mega-menu-position"><a href="{% url 'shop_page' %}">Food</a>
+                                    <li class="mega-menu-position"><a href="{% url 'shop_page' %}">Shop</a>
                                         <ul class="mega-menu">
                                             <li>
                                                 <ul>
-                                                    <li class="mega-menu-title">Dogs Food</li>
-                                                    <li><a href="shop-page.html">Eggs</a></li>
-                                                    <li><a href="shop-page.html">Carrots</a></li>
-                                                    <li><a href="shop-page.html">Salmon fishs</a></li>
-                                                    <li><a href="shop-page.html">Peanut Butter</a></li>
-                                                    <li><a href="shop-page.html">Grapes & Raisins</a></li>
+                                                    <li class="mega-menu-title">Food Category</li>
+                                                    {% for category in food_categories %}
+                                                        <li><a href="{% url 'shop_page_by_category' category_type='food' category_slug=category.slug %}">{{ category.name }}</a></li>
+                                                    {% empty %}
+                                                        <li>No food categories available.</li>
+                                                    {% endfor %}
                                                 </ul>
                                             </li>
                                             <li>
                                                 <ul>
-                                                    <li class="mega-menu-title">Cats Food</li>
-                                                    <li><a href="shop-page.html">Meat</a></li>
-                                                    <li><a href="shop-page.html">Fish</a></li>
-                                                    <li><a href="shop-page.html">Eggs</a></li>
-                                                    <li><a href="shop-page.html">Veggies</a></li>
-                                                    <li><a href="shop-page.html">Cheese</a></li>
+                                                    <li class="mega-menu-title">Pet Category</li>
+                                                    {% for category in pet_categories %}
+                                                        <li><a href="{% url 'shop_page_by_category' category_type='pet' category_slug=category.slug %}">{{ category.name }}</a></li>
+                                                    {% empty %}
+                                                        <li>No pet categories available.</li>
+                                                    {% endfor %}
                                                 </ul>
                                             </li>
                                             <li>
                                                 <ul>
-                                                    <li class="mega-menu-title">Fishs Food</li>
-                                                    <li><a href="shop-page.html">Rice</a></li>
-                                                    <li><a href="shop-page.html">Veggies</a></li>
-                                                    <li><a href="shop-page.html">Cheese</a></li>
-                                                    <li><a href="shop-page.html">wheat bran</a></li>
-                                                    <li><a href="shop-page.html">Cultivation</a></li>
+                                                    <li class="mega-menu-title">Brand</li>
+                                                    {% for brand in brands %}
+                                                        <li><a href="{% url 'shop_page_by_category' category_type='brand' category_slug=brand.slug %}">{{ brand.name }}</a></li>
+                                                    {% empty %}
+                                                        <li>No brands available.</li>
+                                                    {% endfor %}
                                                 </ul>
                                             </li>
                                             <li>
                                                 <ul>
-                                                    <li><a href="shop-page.html"><img alt="" src="{% static 'shop/img/banner/menu-img-4.jpg' %}"></a></li>
+                                                    <li><a href="{% url 'shop_page' %}"><img alt="" src="{% static 'shop/img/banners/menu-img-4.jpg' %}"></a></li>
                                                 </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">PAGES</a>
-                                        <ul class="submenu">
-                                            <li>
-                                                <a href="{% url 'about_us' %}">about us</a>
-                                            </li>
-                                            <li>
-                                                <a href="shop-page.html">shop page</a>
-                                            </li>
-                                            <li>
-                                                <a href="{% url 'shop_list' %}">shop list</a>
-                                            </li>
-                                            <li>
-                                                <a href="product-details.html">product details</a>
-                                            </li>
-                                            <li>
-                                                <a href="cart.html">cart page</a>
-                                            </li>
-                                            <li>
-                                                <a href="checkout.html">checkout</a>
-                                            </li>
-                                            <li>
-                                                <a href="wishlist.html">wishlist</a>
-                                            </li>
-                                            <li>
-                                                <a href="contact.html">contact us</a>
-                                            </li>
-                                            <li>
-                                                <a href="my-account.html">my account</a>
-                                            </li>
-                                            <li>
-                                                <a href="login-register.html">login / register</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -181,7 +151,11 @@
                                 </div>
                             </div>
                             <div class="header-login same-style">
-                                <a href="login-register.html"><i class="icon-user icons"></i></a>
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'my_account' %}"><i class="icon-user icons"></i></a>
+                                {% else %}
+                                    <a href="{% url 'login_register' %}"><i class="icon-user icons"></i></a>
+                                {% endif %}
                             </div>
                             <div class="header-cart same-style">
                                 <button class="icon-cart">
@@ -526,6 +500,8 @@
     <script src="{% static 'shop/js/main.js' %}"></script>
     <script src="{% static 'shop/js/instafeed.js' %}"></script>
     <script src="{% static 'shop/js/price.js' %}"></script>
+    <script src="{% static 'shop/js/country-input.js' %}"></script>
+    <script src="{% static 'shop/js/change-title.js' %}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmGmeot5jcjdaJTvfCmQPfzeoG_pABeWo"></script>
     <script>
         function init() {

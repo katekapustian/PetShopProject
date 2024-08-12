@@ -1,11 +1,23 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Product, FoodCategory, PetCategory, Brand
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Product, FoodCategory, PetCategory, Brand, Profile
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
+from django.contrib import messages
+from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm, AddressUpdateForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from .utils import ensure_profile_exists
 
 
 def index(request):
-    return render(request, 'shop/index.html')
+    latest_products = Product.objects.filter(available=True).order_by('-created')[:8]
+    context = {
+        'latest_products': latest_products,
+    }
+    return render(request, 'shop/index.html', context)
 
 
 def about_us(request):
@@ -20,8 +32,120 @@ def login_register(request):
     return render(request, 'shop/login-register.html')
 
 
+def register(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            Profile.objects.create(user=user)
+            messages.success(request, 'Registration successful. Please log in.')
+            return redirect('login_register')
+        else:
+            register_errors = form.errors.get_json_data()
+            formatted_errors = []
+            for field, errors in register_errors.items():
+                for error in errors:
+                    formatted_errors.append(f"{field}: {error['message']}")
+            return render(request, 'shop/login-register.html', {'register_errors': formatted_errors})
+    return redirect('login_register')
+
+
+def login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                auth_login(request, user)
+                return redirect('index')
+            else:
+                login_errors = 'Incorrect username or password.'
+                return render(request, 'shop/login-register.html', {'login_errors': login_errors})
+        else:
+            login_errors = 'Incorrect username or password.'
+            return render(request, 'shop/login-register.html', {'login_errors': login_errors})
+    return redirect('login_register')
+
+
+@login_required
 def my_account(request):
-    return render(request, 'shop/my-account.html')
+    ensure_profile_exists(request.user)
+
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, instance=request.user.profile)
+        address_form = AddressUpdateForm(request.POST, instance=request.user.profile)
+
+        if user_form.is_valid() and profile_form.is_valid() and address_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            address_form.save()
+            messages.success(request, 'Your account has been updated!')
+            return redirect('my_account')
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+        address_form = AddressUpdateForm(instance=request.user.profile)
+
+    countries = ["United States", "Ukraine", "United Kingdom"]
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'address_form': address_form,
+        'countries': countries
+    }
+
+    return render(request, 'shop/my-account.html', context)
+
+
+@login_required
+def update_account(request):
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your account information has been updated!')
+            return redirect('my_account')
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+    }
+
+    return render(request, 'shop/update-account.html', context)
+
+
+@login_required
+def update_address(request):
+    if request.method == 'POST':
+        address_form = AddressUpdateForm(request.POST, instance=request.user.profile)
+        if address_form.is_valid():
+            address_form.save()
+            messages.success(request, 'Your address has been updated!')
+            return redirect('my_account')
+    else:
+        address_form = AddressUpdateForm(instance=request.user.profile)
+
+    countries = ["United States", "Ukraine", "United Kingdom"]
+    context = {
+        'address_form': address_form,
+        'countries': countries,
+    }
+
+    return render(request, 'shop/update-address.html', context)
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('index')
 
 
 def product_details(request, id, slug):
