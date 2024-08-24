@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, FoodCategory, PetCategory, Brand, Profile
+from .models import Product, FoodCategory, PetCategory, Brand, Profile, NewsletterSubscription
 from django.contrib.auth.models import User
 
 
@@ -43,6 +43,12 @@ class ProfileAdmin(admin.ModelAdmin):
         return obj.user.last_name
     get_last_name.admin_order_field = 'user__last_name'
     get_last_name.short_description = 'Last Name'
+
+
+@admin.register(NewsletterSubscription)
+class NewsletterSubscriptionAdmin(admin.ModelAdmin):
+    list_display = ('email', 'coupon_code', 'coupon_used')
+    search_fields = ('email', 'coupon_code')
 
 
 admin.site.register(Product, ProductAdmin)

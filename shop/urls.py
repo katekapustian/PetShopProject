@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
-from .views import logout_view, update_account, update_address
+from .views import logout_view, update_account, update_address, quick_view
+
+app_name = 'shop'
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -24,4 +26,6 @@ urlpatterns = [
     path('brand/<slug:brand_slug>/', views.product_list_by_brand, name='product_list_by_brand'),
     path('search/', views.search_products, name='search_products'),
     path('wishlist/', views.wishlist, name='wishlist'),
+    path('quick-view/<int:product_id>/', quick_view, name='quick_view'),
+    path('subscribe/', views.subscribe_newsletter, name='subscribe_newsletter'),
 ]

@@ -2633,7 +2633,7 @@ h4.footer-title {
     padding-left: 20px;
     position: relative;
     width: 100%;
-    background: rgba(0, 0, 0, 0) url("../../assets/img/icon-img/select.png") no-repeat scroll right 20px center;
+    background: rgba(0, 0, 0, 0) url("../../shop/img/icon-img/select.png") no-repeat scroll right 20px center;
     cursor: pointer;
 }
 .qtybutton {
@@ -3545,6 +3545,22 @@ input.cart-plus-minus-box {
     margin-right: 15px;
     width: 62px;
 }
+.product-list-action-left .addtocart-btn {
+    background-color: #7e4c4f;
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1;
+    padding: 12px 22px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.product-list-action-left .addtocart-btn:hover {
+    background-color: #333333;
+}
 .rattings-wrapper {
     margin-bottom: 40px;
 }
@@ -3680,7 +3696,7 @@ input.cart-plus-minus-box {
 }
 .product-wishlist-cart {
     text-align: center;
-}       
+}
 .table-content table td.product-name a {
     color: #333;
     font-size: 16px;
@@ -3819,7 +3835,7 @@ input.cart-plus-minus-box {
     width: 196px;
 }
 .tax-select select {
-    background: #fff url("../../assets/img/icon-img/cart-select.png") no-repeat scroll right 10px center;
+    background: #fff url("../../shop/img/icon-img/cart-select.png") no-repeat scroll right 10px center;
     cursor: pointer;
 }
 .tax-select>label {
@@ -4120,7 +4136,7 @@ h5.panel-title span {
 .billing-select select {
     -moz-appearance: none;
     -webkit-appearance: none;
-    background: #fff url("../../assets/img/icon-img/shop.png") no-repeat scroll right 10px center;
+    background: #fff url("../../shop/img/icon-img/shop.png") no-repeat scroll right 10px center;
     cursor: pointer;
 }
 .billing-info {
@@ -4747,4 +4763,102 @@ blockquote.importent-title {
 }
 .dropdown-item:hover {
     background-color: #f1f1f1;
+}
+/* Chrome, Safari, Edge, Opera */
+.product-quantity input.cart-plus-minus-box::-webkit-outer-spin-button,
+.product-quantity input.cart-plus-minus-box::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* Firefox */
+.product-quantity input.cart-plus-minus-box[type=number] {
+    -moz-appearance: textfield;
+}
+li.cart-dropdown.cart-empty-title {
+    display: none;
+    border: 0;
+    margin: 0;
+    padding: 15px;
+}
+li.cart-dropdown.cart-empty-title h2 {
+    font-size: 16px;
+    text-align: center;
+}
+.cart-empty-title {
+    display: none;
+    border: 0;
+    margin: 0;
+    padding: 15px;
+}
+.cart-empty-title h2 {
+    font-size: 16px;
+    text-align: center;
+}
+.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+.wishlist-empty-title {
+    padding: 15px;
+}
+.wishlist-empty-title h2 {
+    font-size: 16px;
+    text-align: center;
+}
+/* Hide the arrows in number input fields */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield; /* Firefox */
+}
+#quick-view-read-more {
+    display: inline-block;
+    color: #7e4c4f;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 5px;
+    margin-top: -5px;
+    margin-bottom: 30px;
+}
+#quick-view-read-more:hover {
+    text-decoration: underline;
+}
+.product-price {
+    margin-bottom: 15px;
+}
+.header-message-wrapper {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 1000;
+}
+.form-message--success {
+    color: #56ad6a !important;
+    background-color: #ecfef0;
+    padding: 5px;
+    text-align: center;
+    margin-bottom: 0;
+}
+.form-message--error {
+    color: #f44336 !important;
+    background-color: #fdecea;
+    padding: 5px;
+    text-align: center;
+    margin-bottom: 0;
+}
+.message-close-btn {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 16px;
+    cursor: pointer;
+    float: right;
+    text-align: right;
+    margin-right: 20px;
+    padding: 0 5px;
+    display: inline-block;
 }

@@ -1,15 +1,34 @@
-document.getElementById("countryInput").addEventListener("click", function() {
-    document.getElementById("countryDropdown").style.display = "block";
+document.addEventListener("DOMContentLoaded", function() {
+    const countryInput = document.getElementById("countryInput");
+    const countryDropdown = document.getElementById("countryDropdown");
+
+    if (countryInput && countryDropdown) {
+        console.log("Country input and dropdown found");
+
+        countryInput.addEventListener("click", function() {
+            console.log("Country input clicked");
+            countryDropdown.style.display = "block";
+        });
+
+        document.addEventListener("click", function(event) {
+            const isClickInside = countryInput.contains(event.target) || countryDropdown.contains(event.target);
+            if (!isClickInside) {
+                console.log("Click outside detected, hiding dropdown");
+                countryDropdown.style.display = "none";
+            }
+        });
+    } else {
+        console.log("Country input or dropdown not found");
+    }
 });
 
 function selectCountry(country) {
-    document.getElementById("countryInput").value = country;
-    document.getElementById("countryDropdown").style.display = "none";
-}
+    const countryInput = document.getElementById("countryInput");
+    const countryDropdown = document.getElementById("countryDropdown");
 
-document.addEventListener("click", function(event) {
-    var isClickInside = document.getElementById("countryInput").contains(event.target);
-    if (!isClickInside) {
-        document.getElementById("countryDropdown").style.display = "none";
+    if (countryInput && countryDropdown) {
+        console.log(`Country selected: ${country}`);
+        countryInput.value = country;
+        countryDropdown.style.display = "none";
     }
-});
+}

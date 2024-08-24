@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from django.contrib.auth.models import User
+from django.utils.crypto import get_random_string
 
 
 class FoodCategory(models.Model):
@@ -95,3 +96,17 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username} Profile'
+
+
+class NewsletterSubscription(models.Model):
+    email = models.EmailField(unique=True)
+    coupon_code = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    coupon_used = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if not self.coupon_code:
+            self.coupon_code = f'PETSHOP-{NewsletterSubscription.objects.count() + 1}'
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.email

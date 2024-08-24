@@ -6,7 +6,7 @@
         <div class="breadcrumb-content text-center">
             <h2>Product Details</h2>
             <ul>
-                <li><a href="{% url 'index' %}">home</a></li>
+                <li><a href="{% url 'shop:index' %}">home</a></li>
                 <li class="active">Product Details</li>
             </ul>
         </div>
@@ -58,34 +58,30 @@
                         <span><i class="ion-android-checkbox-outline"></i> In Stock</span>
                     </div>
                     <p>{{ categories_string }}</p>
-                    <div class="quality-wrapper mt-30 product-quantity">
-                        <label>Qty:</label>
-                        <div class="cart-plus-minus">
-                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2">
+                    <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="quality-wrapper mt-30 product-quantity">
+                            <label>Qty:</label>
+                            <div class="cart-plus-minus">
+                                <input class="cart-plus-minus-box" type="number" name="quantity" value="1" min="1">
+                            </div>
                         </div>
-                    </div>
-                    <div class="product-list-action">
-                        <div class="product-list-action-left">
-                            <a class="addtocart-btn" href="#" title="Add to cart">
-                                <i class="ion-bag"></i>
-                                Add to cart
-                            </a>
+                        <div class="product-list-action">
+                            <div class="product-list-action-left">
+                                <button type="submit" class="addtocart-btn" title="Add to cart">
+                                    <i class="ion-bag"></i>
+                                    Add to cart
+                                </button>
+                            </div>
+                            <div class="product-list-action-right">
+                                {% if user.is_authenticated %}
+                                <a href="{% url 'wishlist:wishlist_add' product.id %}" title="Wishlist">
+                                    <i class="ti-heart"></i>
+                                </a>
+                                {% endif %}
+                            </div>
                         </div>
-                        <div class="product-list-action-right">
-                            <a href="#" title="Wishlist">
-                                <i class="ti-heart"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="social-icon mt-30">
-                        <ul>
-                            <li><a href="#"><i class="icon-social-twitter"></i></a></li>
-                            <li><a href="#"><i class="icon-social-instagram"></i></a></li>
-                            <li><a href="#"><i class="icon-social-linkedin"></i></a></li>
-                            <li><a href="#"><i class="icon-social-skype"></i></a></li>
-                            <li><a href="#"><i class="icon-social-dribbble"></i></a></li>
-                        </ul>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

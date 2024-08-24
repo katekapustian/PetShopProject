@@ -9,7 +9,7 @@
             <h3 class="animated">We keep pets for pleasure.</h3>
             <h1 class="animated">Standard Food & Vitamins <br>For all Pets</h1>
             <div class="slider-btn">
-                <a class="animated" href="{% url 'shop_page' %}">SHOP NOW</a>
+                <a class="animated" href="{% url 'shop:shop_page' %}">SHOP NOW</a>
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@
             <h3 class="animated">We keep pets for pleasure.</h3>
             <h1 class="animated">Standard Food & Vitamins <br>For all Pets</h1>
             <div class="slider-btn">
-                <a class="animated" href="{% url 'shop_page' %}">SHOP NOW</a>
+                <a class="animated" href="{% url 'shop:shop_page' %}">SHOP NOW</a>
             </div>
         </div>
     </div>
@@ -74,25 +74,27 @@
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                 <div class="product-wrapper mb-10">
                     <div class="product-img">
-                        <a href="{% url 'product_detail' product.id product.slug %}">
+                        <a href="{% url 'shop:product_detail' product.id product.slug %}">
                             <img src="{{ product.image.url }}" alt="{{ product.name }}">
                         </a>
                         <div class="product-action">
-                            <a title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#">
+                            <a title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#" data-product-id="{{ product.id }}">
                                 <i class="ti-plus"></i>
                             </a>
-                            <a title="Add To Cart" href="#">
-                                <i class="ti-shopping-cart"></i>
-                            </a>
+                        <a title="Add To Cart" href="{% url 'cart:cart_add' product.id %}">
+                            <i class="ti-shopping-cart"></i>
+                        </a>
                         </div>
                         <div class="product-action-wishlist">
-                            <a title="Wishlist" href="#">
+                            {% if user.is_authenticated %}
+                            <a title="Wishlist" href="{% url 'wishlist:wishlist_add' product.id %}">
                                 <i class="ti-heart"></i>
                             </a>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="product-content">
-                        <h4><a href="{% url 'product_detail' product.id product.slug %}">{{ product.name|truncatewords:7 }}</a></h4>
+                        <h4><a href="{% url 'shop:product_detail' product.id product.slug %}">{{ product.name|truncatewords:7 }}</a></h4>
                         <div class="product-price">
                             <span class="new">${{ product.new_price }}&nbsp;&nbsp;</span>
                             {% if product.old_price %}

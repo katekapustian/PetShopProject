@@ -6,7 +6,7 @@
         <div class="breadcrumb-content text-center">
             <h2 id="breadcrumb-title">Login / Registration</h2>
             <ul>
-                <li><a href="{% url 'index' %}">home</a></li>
+                <li><a href="{% url 'shop:index' %}">home</a></li>
                 <li class="active" id="breadcrumb-subtitle">Login / Registration</li>
             </ul>
         </div>
@@ -43,10 +43,11 @@
                         <div id="lg1" class="tab-pane active">
                             <div class="login-form-container">
                                 <div class="login-register-form">
-                                    <form action="{% url 'login' %}" method="post">
+                                    <form action="{% url 'shop:login' %}?next={{ next }}" method="post">
                                         {% csrf_token %}
                                         <input type="text" name="username" placeholder="Username" required>
                                         <input type="password" name="password" placeholder="Password" required>
+                                        <input type="hidden" name="next" value="{{ next }}">
                                         <div class="button-box">
                                             <button type="submit"><span>Login</span></button>
                                         </div>
@@ -57,7 +58,7 @@
                         <div id="lg2" class="tab-pane">
                             <div class="login-form-container">
                                 <div class="login-register-form">
-                                    <form action="{% url 'register' %}" method="post">
+                                    <form action="{% url 'shop:register' %}" method="post">
                                         {% csrf_token %}
                                         <input type="text" name="first_name" placeholder="First Name" required>
                                         <input type="text" name="last_name" placeholder="Last Name" required>

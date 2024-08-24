@@ -1,5 +1,7 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Product, FoodCategory, PetCategory, Brand, Profile
+from django.utils.http import url_has_allowed_host_and_scheme
+from .models import Product, FoodCategory, PetCategory, Brand, Profile, NewsletterSubscription
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth import authenticate, login as auth_login
@@ -10,6 +12,10 @@ from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm, Addr
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .utils import ensure_profile_exists
+from django.http import JsonResponse
+from django.utils.text import Truncator
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 
 def index(request):
@@ -39,7 +45,7 @@ def register(request):
             user = form.save()
             Profile.objects.create(user=user)
             messages.success(request, 'Registration successful. Please log in.')
-            return redirect('login_register')
+            return redirect('shop:login_register')
         else:
             register_errors = form.errors.get_json_data()
             formatted_errors = []
@@ -47,10 +53,11 @@ def register(request):
                 for error in errors:
                     formatted_errors.append(f"{field}: {error['message']}")
             return render(request, 'shop/login-register.html', {'register_errors': formatted_errors})
-    return redirect('login_register')
+    return redirect('shop:login_register')
 
 
 def login(request):
+    next_url = request.GET.get('next', 'shop:index')
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -59,14 +66,19 @@ def login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 auth_login(request, user)
-                return redirect('index')
+                if url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
+                    return HttpResponseRedirect(next_url)
+                else:
+                    return redirect('shop:index')
             else:
                 login_errors = 'Incorrect username or password.'
-                return render(request, 'shop/login-register.html', {'login_errors': login_errors})
+                return render(request, 'shop/login-register.html', {'form': form, 'login_errors': login_errors, 'next': next_url})
         else:
             login_errors = 'Incorrect username or password.'
-            return render(request, 'shop/login-register.html', {'login_errors': login_errors})
-    return redirect('login_register')
+            return render(request, 'shop/login-register.html', {'form': form, 'login_errors': login_errors, 'next': next_url})
+    else:
+        form = AuthenticationForm()
+        return render(request, 'shop/login-register.html', {'form': form, 'next': next_url})
 
 
 @login_required
@@ -83,7 +95,7 @@ def my_account(request):
             profile_form.save()
             address_form.save()
             messages.success(request, 'Your account has been updated!')
-            return redirect('my_account')
+            return redirect('shop:my_account')
     else:
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=request.user.profile)
@@ -109,7 +121,7 @@ def update_account(request):
             user_form.save()
             profile_form.save()
             messages.success(request, 'Your account information has been updated!')
-            return redirect('my_account')
+            return redirect('shop:my_account')
     else:
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=request.user.profile)
@@ -129,7 +141,7 @@ def update_address(request):
         if address_form.is_valid():
             address_form.save()
             messages.success(request, 'Your address has been updated!')
-            return redirect('my_account')
+            return redirect('shop:my_account')
     else:
         address_form = AddressUpdateForm(instance=request.user.profile)
 
@@ -144,8 +156,13 @@ def update_address(request):
 
 @login_required
 def logout_view(request):
-    logout(request)
-    return redirect('index')
+    next_url = request.GET.get('next', 'shop:index')
+    if url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
+        logout(request)
+        return HttpResponseRedirect(next_url)
+    else:
+        logout(request)
+        return redirect('shop:index')
 
 
 def product_details(request, id, slug):
@@ -344,3 +361,38 @@ def search_products(request):
         'query': query,
         'search_mode': True,
     })
+
+
+def quick_view(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    truncated_description = Truncator(product.description).chars(500, truncate='...')
+
+    data = {
+        'name': product.name,
+        'new_price': product.new_price,
+        'description': truncated_description,
+        'full_description_url': product.get_absolute_url(),
+        'image_url': product.image.url
+    }
+    return JsonResponse(data)
+
+
+def subscribe_newsletter(request):
+    if request.method == 'POST':
+        email = request.POST.get('EMAIL')
+
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, "Please enter a valid email address.", extra_tags='error')
+            return redirect('shop:index')
+
+        if NewsletterSubscription.objects.filter(email=email).exists():
+            messages.error(request, "This email is already subscribed.", extra_tags='error')
+        else:
+            subscription = NewsletterSubscription(email=email)
+            subscription.save()
+            messages.success(request, "Thanks for subscribing!", extra_tags='success')
+
+        return redirect('shop:index')

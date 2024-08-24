@@ -1,470 +1,275 @@
 {% extends "shop/base.html" %}
 {% load static %}
 {% block content %}
-<div class="breadcrumb-area pt-95 pb-95 bg-img" style="background-image:url(assets/img/banner/banner-2.jpg);">
-<div class="container">
-<div class="breadcrumb-content text-center">
-    <h2>Checkout</h2>
-    <ul>
-        <li><a href="index.html">home</a></li>
-        <li class="active">Checkout</li>
-    </ul>
+<div class="breadcrumb-area pt-95 pb-95 bg-img" style="background-image:url('{% static 'shop/img/banners/banner-2.jpg' %}');">
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <h2>Checkout</h2>
+            <ul>
+                <li><a href="{% url 'shop:index' %}">home</a></li>
+                <li class="active">Checkout</li>
+            </ul>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-<!-- shopping-cart-area start -->
 <div class="checkout-area pt-95 pb-70">
-<div class="container">
-<h3 class="page-title">checkout</h3>
-<div class="row">
-    <div class="col-lg-9">
-        <div class="checkout-wrapper">
-            <div id="faq" class="panel-group">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 class="panel-title"><span>1</span> <a data-toggle="collapse" data-parent="#faq" href="#payment-1">Checkout method</a></h5>
-                    </div>
-                    <div id="payment-1" class="panel-collapse collapse show">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="checkout-register">
-                                        <h5 class="checkout-sub-title">great an account</h5>
-                                        <p>Please enter your email address to create an account</p>
-                                        <form>
-                                            <label> Email Address </label>
-                                            <input type="email" name="email">
-                                            <button class="checkout-btn" type="submit">Great An Account</button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="checkout-login">
-                                        <h5 class="checkout-sub-title">login</h5>
-                                        <form>
-                                            <div class="login-form">
-                                                <label> Email Address </label>
-                                                <input type="email" name="email">
-                                            </div>
-                                            <div class="login-form">
-                                                <label> Password </label>
-                                                <input type="email" name="email">
-                                            </div>
-                                        </form>
-                                        <div class="login-forget">
-                                            <button class="checkout-btn" type="submit">Login</button>
-                                            <a href="#">Forgot your password?</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+    <div class="container">
+        <h3 class="page-title">checkout</h3>
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="checkout-wrapper">
+                    <div id="faq" class="panel-group">
+                        {% if errors %}
+                        <div class="errors">
+                            <ul>
+                                {% for error in errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
                         </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 class="panel-title"><span>2</span> <a data-toggle="collapse" data-parent="#faq" href="#payment-2">billing information</a></h5>
-                    </div>
-                    <div id="payment-2" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="billing-information-wrapper">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="billing-info">
-                                            <label>First Name</label>
-                                            <input type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="billing-info">
-                                            <label>Last Name</label>
-                                            <input type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="billing-info">
-                                            <label>Company</label>
-                                            <input type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="billing-info">
-                                            <label>Email Address</label>
-                                            <input type="email">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="billing-info">
-                                            <label>Address</label>
-                                            <input type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="billing-info">
-                                            <label>city</label>
-                                            <input type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="billing-info">
-                                            <label>State/Province</label>
-                                            <input type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="billing-info">
-                                            <label>Zip/Postal Code</label>
-                                            <input type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="billing-select card-mrg">
-                                            <label>Country</label>
-                                            <select>
-                                                <option value="1">United State</option>
-                                                <option value="2">Azerbaijan</option>
-                                                <option value="3">Bahamas</option>
-                                                <option value="4">Bahrain</option>
-                                                <option value="5">Bangladesh</option>
-                                                <option value="6">Barbados</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="billing-info">
-                                            <label>Telephone</label>
-                                            <input type="text">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="billing-info">
-                                            <label>Fax</label>
-                                            <input type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ship-wrapper">
-                                    <div class="single-ship">
-                                        <input type="radio" name="address" value="address" checked="">
-                                        <label>Ship to this address</label>
-                                    </div>
-                                    <div class="single-ship">
-                                        <input type="radio" name="address" value="dadress">
-                                        <label>Ship to different address</label>
-                                    </div>
-                                </div>
-                                <div class="billing-back-btn">
-                                    <div class="billing-back">
-                                        <a href="#"><i class="ti-arrow-up"></i> back</a>
-                                    </div>
-                                    <div class="billing-btn">
-                                        <button type="submit">Get a Quote</button>
-                                    </div>
-                                </div>
+                        {% endif %}
+                        {% if not request.user.is_authenticated %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h5 class="panel-title"><span>1</span> <a data-toggle="collapse" data-parent="#faq" href="#checkout-method" class="collapsed">Login / Guest</a></h5>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 class="panel-title"><span>3</span> <a data-toggle="collapse" data-parent="#faq" href="#payment-3">shipping information</a></h5>
-                    </div>
-                    <div id="payment-3" class="panel-collapse collapse ">
-                        <div class="panel-body">
-                            <div class="shipping-information-wrapper">
-                                <div class="shipping-info-2">
-                                    <span> Address will go here. </span>
-                                    <span>T: 012 345 678 </span>
-                                </div>
-                                <div class="edit-address">
-                                    <a href="#">Edit Address</a>
-                                </div>
-                                <div class="billing-select">
-                                    <select class="email s-email s-wid">
-                                        <option>Select Your Address</option>
-                                        <option>Add New Address</option>
-                                        <option>Boot Experts, Bangladesh</option>
-                                    </select>
-                                </div>
-                                <div class="ship-wrapper">
-                                    <div class="single-ship">
-                                        <input type="checkbox" checked="" value="address" name="address">
-                                        <label>Use Billing Address</label>
-                                    </div>
-                                </div>
-                                <div class="billing-back-btn">
-                                    <div class="billing-back">
-                                        <a href="#"><i class="ti-arrow-up"></i> back</a>
-                                    </div>
-                                    <div class="billing-btn">
-                                        <button type="submit">Continue</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 class="panel-title"><span>4</span> <a data-toggle="collapse" data-parent="#faq" href="#payment-4">Shipping method</a></h5>
-                    </div>
-                    <div id="payment-4" class="panel-collapse collapse ">
-                        <div class="panel-body">
-                            <div class="shipping-method-wrapper">
-                                <div class="shipping-method">
-                                    <p>Flat Rate</p>
-                                    <p>Fixed $40.00</p>
-                                </div>
-                                <div class="billing-back-btn">
-                                    <div class="billing-back">
-                                        <a href="#"><i class="ti-arrow-up"></i> back</a>
-                                    </div>
-                                    <div class="billing-btn">
-                                        <button type="submit">Continue</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 class="panel-title"><span>5</span> <a data-toggle="collapse" data-parent="#faq" href="#payment-5">payment information</a></h5>
-                    </div>
-                    <div id="payment-5" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="payment-info-wrapper">
-                                <div class="ship-wrapper">
-                                    <div class="single-ship">
-                                        <input type="radio" checked="" value="address" name="address">
-                                        <label>Check / Money order </label>
-                                    </div>
-                                    <div class="single-ship">
-                                        <input type="radio" value="dadress" name="address">
-                                        <label>Credit Card (saved) </label>
-                                    </div>
-                                </div>
-                                <div class="payment-info">
+                            <div id="checkout-method" class="panel-collapse collapse show">
+                                <div class="panel-body">
                                     <div class="row">
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="billing-info">
-                                                <label>Name on Card </label>
-                                                <input type="text">
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="checkout-login">
+                                                <h5 class="checkout-sub-title">Login</h5>
+                                                <form method="post" action="{% url 'shop:login' %}?next={% url 'orders:order_create' %}">
+                                                    {% csrf_token %}
+                                                    <div class="login-form">
+                                                        <label>Username</label>
+                                                        <input type="text" name="username" required>
+                                                    </div>
+                                                    <div class="login-form">
+                                                        <label>Password</label>
+                                                        <input type="password" name="password" required>
+                                                    </div>
+                                                    <div class="login-forget">
+                                                        <button class="checkout-btn" type="submit">Login</button>
+                                                    </div>
+                                                    <input type="hidden" name="next" value="{% url 'orders:order_create' %}">
+                                                </form>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="billing-select card-mrg">
-                                                <label>Credit Card Type</label>
-                                                <select>
-                                                    <option>American Express</option>
-                                                    <option>Visa</option>
-                                                    <option>MasterCard</option>
-                                                    <option>Discover</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-md-12">
-                                            <div class="billing-info">
-                                                <label>Credit Card Number </label>
-                                                <input type="text">
+                                        <div class="col-lg-6 col-md-12">
+                                            <div class="checkout-login">
+                                                <h5 class="checkout-sub-title">Guest Checkout</h5>
+                                                <form id="guest-form">
+                                                    {% csrf_token %}
+                                                    <div class="login-form">
+                                                        <label>First Name</label>
+                                                        <input type="text" name="first_name" required>
+                                                    </div>
+                                                    <div class="login-form">
+                                                        <label>Last Name</label>
+                                                        <input type="text" name="last_name" required>
+                                                    </div>
+                                                    <div class="login-form">
+                                                        <label>Email</label>
+                                                        <input type="email" name="email" required>
+                                                    </div>
+                                                    <div id="guest-errors" class="errors" style="display: none;">
+                                                        <ul></ul>
+                                                    </div>
+                                                    <div class="login-forget">
+                                                        <button id="guest-continue-btn" class="checkout-btn" type="button">Continue as Guest</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="expiration-date">
-                                        <label>Expiration Date </label>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h5 class="panel-title"><span>1</span> <a data-toggle="collapse" data-parent="#faq" href="#account-info" class="collapsed">About you</a></h5>
+                            </div>
+                            <div id="account-info" class="panel-collapse collapse show">
+                                <div class="panel-body">
+                                    <div class="billing-information-wrapper">
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6">
-                                                <div class="billing-select month-mrg">
-                                                    <select>
-                                                        <option>Month</option>
-                                                        <option>January</option>
-                                                        <option>February</option>
-                                                        <option> March</option>
-                                                        <option>April</option>
-                                                        <option> May</option>
-                                                        <option>June</option>
-                                                        <option>July</option>
-                                                        <option>August</option>
-                                                        <option>September</option>
-                                                        <option> October</option>
-                                                        <option> November</option>
-                                                        <option> December</option>
-                                                    </select>
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="billing-info">
+                                                    <label>First Name</label>
+                                                    <input type="text" value="{{ request.user.first_name }}" readonly>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6">
-                                                <div class="billing-select">
-                                                    <select>
-                                                        <option>Year</option>
-                                                        <option>2015</option>
-                                                        <option>2016</option>
-                                                        <option>2017</option>
-                                                        <option>2018</option>
-                                                        <option>2019</option>
-                                                        <option>2020</option>
-                                                        <option>2021</option>
-                                                        <option>2022</option>
-                                                        <option>2023</option>
-                                                        <option>2024</option>
-                                                        <option>2025</option>
-                                                    </select>
+                                            <div class="col-lg-6 col-md-12">
+                                                <div class="billing-info">
+                                                    <label>Last Name</label>
+                                                    <input type="text" value="{{ request.user.last_name }}" readonly>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12 col-md-12">
-                                            <div class="billing-info">
-                                                <label>Card Verification Number</label>
-                                                <input type="text">
+                                        <div class="billing-back-btn">
+                                            <div class="billing-btn">
+                                                <a href="{% url 'shop:logout' %}?next={% url 'orders:order_create' %}" class="checkout-btn">Logout</a>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="billing-back-btn">
-                                    <div class="billing-back">
-                                        <a href="#"><i class="ti-arrow-up"></i> back</a>
-                                    </div>
-                                    <div class="billing-btn">
-                                        <button type="submit">Continue</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h5 class="panel-title"><span>6</span> <a data-toggle="collapse" data-parent="#faq" href="#payment-6">Order Review</a></h5>
-                    </div>
-                    <div id="payment-6" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="order-review-wrapper">
-                                <div class="order-review">
-                                    <div class="table-responsive">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th class="width-1">Product Name</th>
-                                                    <th class="width-2">Price</th>
-                                                    <th class="width-3">Qty</th>
-                                                    <th class="width-4">Subtotal</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="o-pro-dec">
-                                                            <p>Fusce aliquam</p>
+                        {% endif %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h5 class="panel-title"><span>2</span> <a data-toggle="collapse" data-parent="#faq" href="#shipping-info" class="collapsed disabled" id="shipping-tab">Shipping information</a></h5>
+                            </div>
+                            <div id="shipping-info" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <form id="shipping-form" method="post" action="{% url 'orders:order_create' %}">
+                                        {% csrf_token %}
+                                        <div class="billing-information-wrapper">
+                                            <div class="row">
+                                                {% if request.user.is_authenticated %}
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="billing-info">
+                                                        <label>Email Address</label>
+                                                        <input type="email" id="shipping-email-authenticated" name="email" value="{{ request.user.email }}" readonly>
+                                                    </div>
+                                                </div>
+                                                {% else %}
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="billing-info">
+                                                        <label>Email Address</label>
+                                                        <input type="email" id="shipping-email-guest" name="email" value="{{ request.session.guest_email }}" readonly>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="billing-info">
+                                                        <label>Telephone</label>
+                                                        <input type="text" name="phone" value="{{ form.initial.phone }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="billing-info">
+                                                        <label>Fax</label>
+                                                        <input type="text" name="fax" value="{{ form.initial.fax }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="billing-info">
+                                                        <label>Address</label>
+                                                        <input type="text" name="address" value="{{ form.initial.address }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="billing-info">
+                                                        <label>City</label>
+                                                        <input type="text" name="city" value="{{ form.initial.city }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="billing-info">
+                                                        <label>Zip/Postal Code</label>
+                                                        <input type="text" name="postal_code" value="{{ form.initial.postal_code }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6">
+                                                    <div class="billing-info">
+                                                        <label>Country</label>
+                                                        <input type="text" id="countryInput" name="country" value="{{ form.initial.country }}" readonly>
+                                                        <div id="countryDropdown" class="dropdown-content">
+                                                            {% for country in countries %}
+                                                                <div class="dropdown-item" onclick="selectCountry('{{ country }}')">{{ country }}</div>
+                                                            {% endfor %}
                                                         </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="o-pro-price">
-                                                            <p>$236.00</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="o-pro-qty">
-                                                            <p>2</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="o-pro-subtotal">
-                                                            <p>$236.00</p>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="o-pro-dec">
-                                                            <p>Primis in faucibus</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="o-pro-price">
-                                                            <p>$265.00</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="o-pro-qty">
-                                                            <p>3</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="o-pro-subtotal">
-                                                            <p>$265.00</p>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="o-pro-dec">
-                                                            <p>Etiam gravida</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="o-pro-price">
-                                                            <p>$363.00</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="o-pro-qty">
-                                                            <p>2</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="o-pro-subtotal">
-                                                            <p>$363.00</p>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="o-pro-dec">
-                                                            <p>Quisque in arcu</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="o-pro-price">
-                                                            <p>$328.00</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="o-pro-qty">
-                                                            <p>2</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="o-pro-subtotal">
-                                                            <p>$328.00</p>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td colspan="3">Subtotal </td>
-                                                    <td colspan="1">$4,001.00</td>
-                                                </tr>
-                                                <tr class="tr-f">
-                                                    <td colspan="3">Shipping & Handling (Flat Rate - Fixed</td>
-                                                    <td colspan="1">$45.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="3">Grand Total</td>
-                                                    <td colspan="1">$4,722.00</td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                    <div class="billing-back-btn">
-                                        <span>
-                                            Forgot an Item?
-                                            <a href="#"> Edit Your Cart.</a>
-
-                                        </span>
-                                        <div class="billing-btn">
-                                            <button type="submit">Continue</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="billing-back-btn">
+                                                <div class="billing-back">
+                                                    <a href="#"><i class="ti-arrow-up"></i> back</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h5 class="panel-title"><span>3</span> <a data-toggle="collapse" data-parent="#faq" href="#order-review" class="collapsed disabled" id="review-tab">Order Review</a></h5>
+                            </div>
+                            <div id="order-review" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="order-review-wrapper">
+                                        <div class="order-review">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="width-1">Product Name</th>
+                                                            <th class="width-2">Price</th>
+                                                            <th class="width-3">Qty</th>
+                                                            <th class="width-4">Subtotal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for item in cart %}
+                                                        <tr>
+                                                            <td>
+                                                                <div class="o-pro-dec">
+                                                                    <p>{{ item.product.name }}</p>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="o-pro-price">
+                                                                    <p>${{ item.price }}</p>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="o-pro-qty">
+                                                                    <p>{{ item.quantity }}</p>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="o-pro-subtotal">
+                                                                    <p>${{ item.total_price }}</p>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="3">Subtotal</td>
+                                                            <td colspan="1" id="order-subtotal">${{ cart.get_total_price|floatformat:2 }}</td>
+                                                        </tr>
+                                                        {% if discount > 0 %}
+                                                        <tr id="order-discount-row">
+                                                            <td colspan="3">Discount</td>
+                                                            <td colspan="1" id="order-discount">- ${{ discount|floatformat:2 }}</td>
+                                                        </tr>
+                                                        {% endif %}
+                                                        <tr>
+                                                            <td colspan="3">Shipping & Handling (Flat Rate - Fixed)</td>
+                                                            <td colspan="1">$0.00</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3">Grand Total</td>
+                                                            <td colspan="1" id="order-grand-total">${{ grand_total|floatformat:2 }}</td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                            <div class="billing-back-btn">
+                                                <span>
+                                                    Forgot an Item?
+                                                    <a href="{% url 'cart:cart_detail' %}"> Edit Your Cart.</a>
+                                                </span>
+                                                <div class="billing-btn">
+                                                    <button type="submit" form="shipping-form">Checkout</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -473,20 +278,121 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-3">
+                <div class="checkout-progress">
+                    <h4>Checkout Progress</h4>
+                    <ul>
+                        <li>Login / Guest</li>
+                        <li>Shipping information</li>
+                        <li>Order Review</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-lg-3">
-        <div class="checkout-progress">
-            <h4>Checkout Progress</h4>
-            <ul>
-                <li>Billing Address</li>
-                <li>Shipping Address</li>
-                <li>Shipping Method</li>
-                <li>Payment Method</li>
-            </ul>
-        </div>
-    </div>
 </div>
-</div>
-</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const guestForm = document.getElementById('guest-form');
+    const guestContinueBtn = document.getElementById('guest-continue-btn');
+    const guestErrors = document.getElementById('guest-errors');
+    const shippingEmailInput = document.getElementById('{{ request.user.is_authenticated|yesno:"shipping-email-authenticated,shipping-email-guest" }}');
+
+    function enableTabs() {
+        document.getElementById('shipping-tab').classList.remove('disabled');
+        document.getElementById('review-tab').classList.remove('disabled');
+    }
+
+    function updateOrderSummary(subtotal, discount, grandTotal) {
+        document.getElementById('order-subtotal').innerText = `$${subtotal.toFixed(2)}`;
+        document.getElementById('order-grand-total').innerText = `$${grandTotal.toFixed(2)}`;
+
+        const orderDiscountRow = document.getElementById('order-discount-row');
+        if (discount > 0) {
+            if (!orderDiscountRow) {
+                const discountRow = document.createElement('tr');
+                discountRow.id = 'order-discount-row';
+                discountRow.innerHTML = `
+                    <td colspan="3">Discount</td>
+                    <td colspan="1" id="order-discount">- $${discount.toFixed(2)}</td>
+                `;
+                const shippingRow = document.querySelector('#order-review table tfoot tr:nth-child(2)');
+                shippingRow.parentNode.insertBefore(discountRow, shippingRow);
+            } else {
+                document.getElementById('order-discount').innerText = `- $${discount.toFixed(2)}`;
+                orderDiscountRow.style.display = 'table-row';
+            }
+        } else if (orderDiscountRow) {
+            orderDiscountRow.style.display = 'none';
+        }
+    }
+
+    const isAuthenticated = {{ request.user.is_authenticated|yesno:"true,false" }};
+    if (isAuthenticated) {
+        enableTabs();
+    }
+
+    guestContinueBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const firstName = guestForm.querySelector('input[name="first_name"]').value;
+        const lastName = guestForm.querySelector('input[name="last_name"]').value;
+        const email = guestForm.querySelector('input[name="email"]').value;
+
+        guestErrors.style.display = 'none';
+        guestErrors.querySelector('ul').innerHTML = '';
+
+        if (firstName && lastName && email) {
+            fetch("{% url 'orders:save_guest_info' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    first_name: firstName,
+                    last_name: lastName,
+                    email: email
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    enableTabs();
+
+                    if (shippingEmailInput) {
+                        shippingEmailInput.value = email;
+                    }
+
+                    updateOrderSummary(data.subtotal, data.discount, data.grand_total);
+                } else {
+                    throw new Error(data.error);
+                }
+            })
+            .catch(error => {
+                guestErrors.style.display = 'block';
+                guestErrors.querySelector('ul').innerHTML = `<li>${error.message}</li>`;
+                console.error('Error:', error);
+            });
+        } else {
+            guestErrors.style.display = 'block';
+            if (!firstName) {
+                const error = document.createElement('li');
+                error.textContent = 'First name is required.';
+                guestErrors.querySelector('ul').appendChild(error);
+            }
+            if (!lastName) {
+                const error = document.createElement('li');
+                error.textContent = 'Last name is required.';
+                guestErrors.querySelector('ul').appendChild(error);
+            }
+            if (!email) {
+                const error = document.createElement('li');
+                error.textContent = 'Email is required.';
+                guestErrors.querySelector('ul').appendChild(error);
+            }
+        }
+    });
+});
+</script>
 {% endblock %}

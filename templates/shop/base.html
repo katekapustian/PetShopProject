@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'shop/img/favicon.png' %}">
+    <meta name="csrf-token" content="{{ csrf_token }}">
 
     <!-- all css here -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -25,6 +26,17 @@
     <script src="{% static 'shop/js/vendor/modernizr-2.8.3.min.js' %}"></script>
 </head>
 <body>
+    <!-- Message Display Section -->
+    {% if messages %}
+        <div class="header-message-wrapper">
+            {% for message in messages %}
+                <div class="form-message--{{ message.tags }}">
+                    {{ message }}
+                    <button class="message-close-btn">X</button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     <header class="header-area">
         <div class="header-top theme-bg">
             <div class="container">
@@ -68,21 +80,21 @@
                 <div class="row">
                     <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 col-5">
                         <div class="logo pt-39">
-                            <a href="{% url 'index' %}"><img alt="" src="{% static 'shop/img/logo/logo.png' %}"></a>
+                            <a href="{% url 'shop:index' %}"><img alt="" src="{% static 'shop/img/logo/logo.png' %}"></a>
                         </div>
                     </div>
                     <div class="col-xl-8 col-lg-7 d-none d-lg-block">
                         <div class="main-menu text-center">
                             <nav>
                                 <ul>
-                                    <li><a href="{% url 'index' %}">HOME</a></li>
-                                    <li class="mega-menu-position"><a href="{% url 'shop_page' %}">Shop</a>
+                                    <li><a href="{% url 'shop:index' %}">HOME</a></li>
+                                    <li class="mega-menu-position"><a href="{% url 'shop:shop_page' %}">Shop</a>
                                         <ul class="mega-menu">
                                             <li>
                                                 <ul>
                                                     <li class="mega-menu-title">Food Category</li>
                                                     {% for category in food_categories %}
-                                                        <li><a href="{% url 'shop_page_by_category' category_type='food' category_slug=category.slug %}">{{ category.name }}</a></li>
+                                                        <li><a href="{% url 'shop:shop_page_by_category' category_type='food' category_slug=category.slug %}">{{ category.name }}</a></li>
                                                     {% empty %}
                                                         <li>No food categories available.</li>
                                                     {% endfor %}
@@ -92,7 +104,7 @@
                                                 <ul>
                                                     <li class="mega-menu-title">Pet Category</li>
                                                     {% for category in pet_categories %}
-                                                        <li><a href="{% url 'shop_page_by_category' category_type='pet' category_slug=category.slug %}">{{ category.name }}</a></li>
+                                                        <li><a href="{% url 'shop:shop_page_by_category' category_type='pet' category_slug=category.slug %}">{{ category.name }}</a></li>
                                                     {% empty %}
                                                         <li>No pet categories available.</li>
                                                     {% endfor %}
@@ -102,7 +114,7 @@
                                                 <ul>
                                                     <li class="mega-menu-title">Brand</li>
                                                     {% for brand in brands %}
-                                                        <li><a href="{% url 'shop_page_by_category' category_type='brand' category_slug=brand.slug %}">{{ brand.name }}</a></li>
+                                                        <li><a href="{% url 'shop:shop_page_by_category' category_type='brand' category_slug=brand.slug %}">{{ brand.name }}</a></li>
                                                     {% empty %}
                                                         <li>No brands available.</li>
                                                     {% endfor %}
@@ -110,26 +122,14 @@
                                             </li>
                                             <li>
                                                 <ul>
-                                                    <li><a href="{% url 'shop_page' %}"><img alt="" src="{% static 'shop/img/banners/menu-img-4.jpg' %}"></a></li>
+                                                    <li><a href="{% url 'shop:shop_page' %}"><img alt="" src="{% static 'shop/img/banners/menu-img-4.jpg' %}"></a></li>
                                                 </ul>
                                             </li>
                                         </ul>
                                     </li>
-                                    <li><a href="{% url 'blog_leftsidebar' %}">Blog</a>
-                                        <ul class="submenu">
-                                            <li>
-                                                <a href="blog.html">blog page</a>
-                                            </li>
-                                            <li>
-                                                <a href="blog-leftsidebar.html">blog left sidebar</a>
-                                            </li>
-                                            <li>
-                                                <a href="blog-details.html">blog details</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="{% url 'about_us' %}">ABOUT</a></li>
-                                    <li><a href="{% url 'contact' %}">contact us</a></li>
+                                    <li><a href="{% url 'blog:blog_leftsidebar' %}">Blog</a></li>
+                                    <li><a href="{% url 'shop:about_us' %}">ABOUT</a></li>
+                                    <li><a href="{% url 'shop:contact' %}">contact us</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -152,52 +152,46 @@
                             </div>
                             <div class="header-login same-style">
                                 {% if user.is_authenticated %}
-                                    <a href="{% url 'my_account' %}"><i class="icon-user icons"></i></a>
+                                    <a href="{% url 'shop:my_account' %}"><i class="icon-user icons"></i></a>
                                 {% else %}
-                                    <a href="{% url 'login_register' %}"><i class="icon-user icons"></i></a>
+                                    <a href="{% url 'shop:login_register' %}"><i class="icon-user icons"></i></a>
                                 {% endif %}
                             </div>
                             <div class="header-cart same-style">
                                 <button class="icon-cart">
                                     <i class="icon-handbag"></i>
-                                    <span class="count-style">02</span>
+                                    <span class="count-style">{{ cart|length }}</span>
                                 </button>
                                 <div class="shopping-cart-content">
+                                    {% if cart %}
                                     <ul>
-                                        <li class="single-shopping-cart">
+                                        {% for item in cart %}
+                                        <li class="single-shopping-cart" id="cart-item-{{ item.product.id }}">
                                             <div class="shopping-cart-img">
-                                                <a href="#"><img alt="" src="{% static 'shop/img/cart/cart-1.jpg' %}"></a>
+                                                <a href="{{ item.product.get_absolute_url }}"><img alt="{{ item.product.name }}" src="{{ item.product.image.url }}"></a>
                                             </div>
                                             <div class="shopping-cart-title">
-                                                <h4><a href="#">Dog Calcium Food </a></h4>
-                                                <h6>Qty: 02</h6>
-                                                <span>$260.00</span>
+                                                <h4><a href="{{ item.product.get_absolute_url }}">{{ item.product.name|truncatewords:1 }}</a></h4>
+                                                <h6>Qty: {{ item.quantity }}</h6>
+                                                <span>${{ item.total_price }}</span>
                                             </div>
                                             <div class="shopping-cart-delete">
-                                                <a href="#"><i class="ti-close"></i></a>
+                                                <a href="#" class="remove-from-cart" data-product-id="{{ item.product.id }}" data-url="{% url 'cart:cart_remove_ajax' %}"><i class="ti-close"></i></a>
                                             </div>
                                         </li>
-                                        <li class="single-shopping-cart">
-                                            <div class="shopping-cart-img">
-                                                <a href="#"><img alt="" src="{% static 'shop/img/cart/cart-2.jpg' %}"></a>
-                                            </div>
-                                            <div class="shopping-cart-title">
-                                                <h4><a href="#">Dog Calcium Food</a></h4>
-                                                <h6>Qty: 02</h6>
-                                                <span>$260.00</span>
-                                            </div>
-                                            <div class="shopping-cart-delete">
-                                                <a href="#"><i class="ti-close"></i></a>
-                                            </div>
-                                        </li>
+                                        {% endfor %}
                                     </ul>
                                     <div class="shopping-cart-total">
-                                        <h4>Shipping : <span>$20.00</span></h4>
-                                        <h4>Total : <span class="shop-total">$260.00</span></h4>
+                                        <h4>Shipping : <span>$0.00</span></h4>
+                                        <h4>Total : <span class="shop-total">${{ cart.get_total_price }}</span></h4>
                                     </div>
                                     <div class="shopping-cart-btn">
-                                        <a href="cart.html">view cart</a>
-                                        <a href="checkout.html">checkout</a>
+                                        <a href="{% url 'cart:cart_detail' %}">view cart</a>
+                                        <a href="{% url 'orders:order_create' %}">checkout</a>
+                                    </div>
+                                    {% endif %}
+                                    <div class="cart-empty-title" style="display: {% if cart %}none{% else %}block{% endif %};">
+                                        <h2>Your cart is currently empty.</h2>
                                     </div>
                                 </div>
                             </div>
@@ -207,91 +201,41 @@
                         <div class="mobile-menu">
                             <nav id="mobile-menu-active">
                                 <ul class="menu-overflow">
-                                    <li><a href="#">HOME</a>
+                                    <li><a href="{% url 'shop:index' %}">HOME</a></li>
+                                    <li><a href="{% url 'shop:shop_page' %}">Shop</a>
                                         <ul>
-                                            <li><a href="index.html">home version 1</a></li>
-                                            <li><a href="index-2.html">home version 2</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">pages</a>
-                                        <ul>
-                                            <li>
-                                                <a href="about-us.html">about us</a>
-                                            </li>
-                                            <li>
-                                                <a href="shop-page.html">shop page</a>
-                                            </li>
-                                            <li>
-                                                <a href="shop-list.html">shop list</a>
-                                            </li>
-                                            <li>
-                                                <a href="product-details.html">product details</a>
-                                            </li>
-                                            <li>
-                                                <a href="cart.html">cart page</a>
-                                            </li>
-                                            <li>
-                                                <a href="checkout.html">checkout</a>
-                                            </li>
-                                            <li>
-                                                <a href="wishlist.html">wishlist</a>
-                                            </li>
-                                            <li>
-                                                <a href="contact.html">contact us</a>
-                                            </li>
-                                            <li>
-                                                <a href="my-account.html">my account</a>
-                                            </li>
-                                            <li>
-                                                <a href="login-register.html">login / register</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Food</a>
-                                        <ul>
-                                            <li><a href="#">Dogs Food</a>
+                                            <li><a href="#">Food Category</a>
                                                 <ul>
-                                                    <li><a href="shop-page.html">Grapes and Raisins</a></li>
-                                                    <li><a href="shop-page.html">Carrots</a></li>
-                                                    <li><a href="shop-page.html">Peanut Butter</a></li>
-                                                    <li><a href="shop-page.html">Salmon fishs</a></li>
-                                                    <li><a href="shop-page.html">Eggs</a></li>
+                                                    {% for category in food_categories %}
+                                                        <li><a href="{% url 'shop:shop_page_by_category' category_type='food' category_slug=category.slug %}">{{ category.name }}</a></li>
+                                                    {% empty %}
+                                                        <li>No food categories available.</li>
+                                                    {% endfor %}
                                                 </ul>
                                             </li>
-                                            <li><a href="#">Cats Food</a>
+                                            <li><a href="#">Pet Category</a>
                                                 <ul>
-                                                    <li><a href="shop-page.html">Meat</a></li>
-                                                    <li><a href="shop-page.html">Fish</a></li>
-                                                    <li><a href="shop-page.html">Eggs</a></li>
-                                                    <li><a href="shop-page.html">Veggies</a></li>
-                                                    <li><a href="shop-page.html">Cheese</a></li>
+                                                    {% for category in pet_categories %}
+                                                        <li><a href="{% url 'shop:shop_page_by_category' category_type='pet' category_slug=category.slug %}">{{ category.name }}</a></li>
+                                                    {% empty %}
+                                                        <li>No pet categories available.</li>
+                                                    {% endfor %}
                                                 </ul>
                                             </li>
-                                            <li><a href="#">Fishs Food</a>
+                                            <li><a href="#">Brand</a>
                                                 <ul>
-                                                    <li><a href="shop-page.html">Rice</a></li>
-                                                    <li><a href="shop-page.html">Veggies</a></li>
-                                                    <li><a href="shop-page.html">Cheese</a></li>
-                                                    <li><a href="shop-page.html">wheat bran</a></li>
-                                                    <li><a href="shop-page.html">Cultivation</a></li>
+                                                    {% for brand in brands %}
+                                                        <li><a href="{% url 'shop:shop_page_by_category' category_type='brand' category_slug=brand.slug %}">{{ brand.name }}</a></li>
+                                                    {% empty %}
+                                                        <li>No brands available.</li>
+                                                    {% endfor %}
                                                 </ul>
                                             </li>
                                         </ul>
                                     </li>
-                                    <li><a href="#">blog</a>
-                                        <ul>
-                                            <li>
-                                                <a href="blog.html">blog page</a>
-                                            </li>
-                                            <li>
-                                                <a href="blog-leftsidebar.html">blog left sidebar</a>
-                                            </li>
-                                            <li>
-                                                <a href="blog-details.html">blog details</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="contact.html"> Contact us </a></li>
+                                    <li><a href="{% url 'blog:blog_leftsidebar' %}">Blog</a></li>
+                                    <li><a href="{% url 'shop:about_us' %}">ABOUT</a></li>
+                                    <li><a href="{% url 'shop:contact' %}"> Contact us </a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -359,11 +303,10 @@
                                 <p>Subscribe to our newsletter and get 10% off your first purchase..</p>
                                 <div class="newsletter-style">
                                     <div id="mc_embed_signup" class="subscribe-form">
-                                        <form action="#" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                                        <form action="{% url 'shop:subscribe_newsletter' %}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                                            {% csrf_token %}
                                             <div id="mc_embed_signup_scroll" class="mc-form">
                                                 <input type="email" value="" name="EMAIL" class="email" placeholder="Your mail address" required>
-                                                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                                                <div class="mc-news" aria-hidden="true"><input type="text" name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef" tabindex="-1" value=""></div>
                                                 <div class="clear"><input type="submit" value="SEND" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
                                             </div>
                                         </form>
@@ -392,87 +335,41 @@
             </div>
         </div>
     </footer>
-    <!-- modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span class="ti-close" aria-hidden="true"></span>
-        </button>
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="qwick-view-left">
-                        <div class="quick-view-learg-img">
-                            <div class="quick-view-tab-content tab-content">
-                                <div class="tab-pane active show fade" id="modal1" role="tabpanel">
-                                    <img src="{% static 'shop/img/quick-view/l1.jpg' %}" alt="">
-                                </div>
-                                <div class="tab-pane fade" id="modal2" role="tabpanel">
-                                    <img src="{% static 'shop/img/quick-view/l2.jpg' %}" alt="">
-                                </div>
-                                <div class="tab-pane fade" id="modal3" role="tabpanel">
-                                    <img src="{% static 'shop/img/quick-view/l3.jpg' %}" alt="">
-                                </div>
+<!-- modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span class="ti-close" aria-hidden="true"></span>
+    </button>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="qwick-view-left">
+                    <div class="quick-view-learg-img">
+                        <div class="quick-view-tab-content tab-content">
+                            <div class="tab-pane active show fade" id="modal1" role="tabpanel">
+                                <img id="quick-view-img" src="" alt="">
                             </div>
-                        </div>
-                        <div class="quick-view-list nav" role="tablist">
-                            <a class="active" href="#modal1" data-toggle="tab">
-                                <img src="{% static 'shop/img/quick-view/s1.jpg' %}" alt="">
-                            </a>
-                            <a href="#modal2" data-toggle="tab" role="tab">
-                                <img src="{% static 'shop/img/quick-view/s2.jpg' %}" alt="">
-                            </a>
-                            <a href="#modal3" data-toggle="tab" role="tab">
-                                <img src="{% static 'shop/img/quick-view/s3.jpg' %}" alt="">
-                            </a>
                         </div>
                     </div>
-                    <div class="qwick-view-right">
-                        <div class="qwick-view-content">
-                            <h3>Dog Calcium Food</h3>
-                            <div class="product-price">
-                                <span>$19.00 </span>
+                </div>
+                <div class="qwick-view-right">
+                    <div class="qwick-view-content">
+                        <h3 id="quick-view-name"></h3>
+                        <div class="product-price">
+                            <span id="quick-view-new-price" class="new"></span>
+                        </div>
+                        <p id="quick-view-description" style="display: inline;"></p><a id="quick-view-read-more" href="#">Read More</a>
+                        <div class="quickview-plus-minus">
+                            <div class="cart-plus-minus">
+                                <input type="number" value="1" name="quantity" class="cart-plus-minus-box" min="1">
                             </div>
-                            <div class="product-rating">
-                                <i class="ion-star theme-color"></i>
-                                <i class="ion-star theme-color"></i>
-                                <i class="ion-star theme-color"></i>
-                                <i class="ion-star theme-color"></i>
-                                <i class="ion-star theme-color"></i>
+                            <div class="quickview-btn-cart">
+                                <a id="quick-view-add-to-cart" class="btn-style" href="#">add to cart</a>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do amt tempor incididun ut labore et dolore magna aliqua. Ut enim ad mi , quis nostrud veniam exercitation .</p>
-                            <div class="quick-view-select">
-                                <div class="select-option-part">
-                                    <label>Size*</label>
-                                    <select class="select">
-                                        <option value="">- Please Select -</option>
-                                        <option value="">XS</option>
-                                        <option value="">S</option>
-                                        <option value="">M</option>
-                                        <option value=""> L</option>
-                                        <option value="">XL</option>
-                                        <option value="">XXL</option>
-                                    </select>
-                                </div>
-                                <div class="select-option-part">
-                                    <label>Color*</label>
-                                    <select class="select">
-                                        <option value="">- Please Select -</option>
-                                        <option value="">orange</option>
-                                        <option value="">pink</option>
-                                        <option value="">yellow</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="quickview-plus-minus">
-                                <div class="cart-plus-minus">
-                                    <input type="text" value="2" name="qtybutton" class="cart-plus-minus-box">
-                                </div>
-                                <div class="quickview-btn-cart">
-                                    <a class="btn-style" href="#">add to cart</a>
-                                </div>
-                                <div class="quickview-btn-wishlist">
-                                    <a class="btn-hover" href="#"><i class="ti-heart"></i></a>
-                                </div>
+                            <div class="quickview-btn-wishlist">
+                                {% if user.is_authenticated %}
+                                <a id="quick-view-add-to-wishlist" class="btn-hover" href="#"><i class="ti-heart"></i></a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -480,6 +377,7 @@
             </div>
         </div>
     </div>
+</div>
 
 
 
@@ -502,6 +400,9 @@
     <script src="{% static 'shop/js/price.js' %}"></script>
     <script src="{% static 'shop/js/country-input.js' %}"></script>
     <script src="{% static 'shop/js/change-title.js' %}"></script>
+    <script src="{% static 'shop/js/cart-remove.js' %}"></script>
+    <script src="{% static 'shop/js/quickview.js' %}"></script>
+    <script src="{% static 'shop/js/message-close.js' %}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBmGmeot5jcjdaJTvfCmQPfzeoG_pABeWo"></script>
     <script>
         function init() {
