@@ -41,12 +41,14 @@
                 <div class="product-details-content">
                     <h2>{{ product.name }}</h2>
                     <div class="product-rating">
-                        <i class="ti-star theme-color"></i>
-                        <i class="ti-star theme-color"></i>
-                        <i class="ti-star theme-color"></i>
-                        <i class="ti-star"></i>
-                        <i class="ti-star"></i>
-                        <span> ( 01 Customer Review )</span>
+                        {% for i in "12345" %}
+                            {% if overall_rating and overall_rating >= forloop.counter %}
+                                <i class="ti-star theme-color"></i>
+                            {% else %}
+                                <i class="ti-star"></i>
+                            {% endif %}
+                        {% endfor %}
+                        <span>({{ review_count }} Customer Review{{ review_count|pluralize }})</span>
                     </div>
                     <div class="product-price">
                         <span class="new">${{ product.new_price }} </span>
@@ -93,7 +95,7 @@
             <div class="description-review-topbar nav text-center">
                 <a class="active" data-toggle="tab" href="#des-details1">DESCRIPTION</a>
                 <a data-toggle="tab" href="#des-details2">INGREDIENTS</a>
-                <a data-toggle="tab" href="#des-details3">REVIEWS (2)</a>
+                <a data-toggle="tab" href="#des-details3">REVIEWS ({{ review_count }})</a>
             </div>
             <div class="tab-content description-review-bottom">
                 <div id="des-details1" class="tab-pane active">
@@ -108,73 +110,72 @@
                 </div>
                 <div id="des-details3" class="tab-pane">
                     <div class="rattings-wrapper">
-                        <div class="sin-rattings">
-                            <div class="star-author-all">
-                                <div class="product-rating f-left">
-                                    <i class="ti-star theme-color"></i>
-                                    <i class="ti-star theme-color"></i>
-                                    <i class="ti-star theme-color"></i>
-                                    <i class="ti-star theme-color"></i>
-                                    <i class="ti-star theme-color"></i>
-                                    <span>(5)</span>
+                        {% for review in reviews %}
+                            <div class="sin-rattings">
+                                <div class="star-author-all">
+                                    <div class="product-rating f-left">
+                                        {% for i in "12345" %}
+                                            {% if review.rating >= forloop.counter %}
+                                                <i class="ti-star theme-color"></i>
+                                            {% else %}
+                                                <i class="ti-star"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <span>({{ review.rating }})</span>
+                                    </div>
+                                    <div class="ratting-author f-right">
+                                        <h3>{{ review.first_name }} {{ review.last_name }}</h3>
+                                        <span>{{ review.created_at|date:"H:i" }}</span>
+                                        <span>{{ review.created_at|date:"d M Y" }}</span>
+                                    </div>
                                 </div>
-                                <div class="ratting-author f-right">
-                                    <h3>tayeb rayed</h3>
-                                    <span>12:24</span>
-                                    <span>9 March 2018</span>
-                                </div>
+                                <p>{{ review.review_text|linebreaksbr }}</p>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nost rud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nost.</p>
-                        </div>
-                        <div class="sin-rattings">
-                            <div class="star-author-all">
-                                <div class="product-rating f-left">
-                                    <i class="ti-star theme-color"></i>
-                                    <i class="ti-star theme-color"></i>
-                                    <i class="ti-star theme-color"></i>
-                                    <i class="ti-star theme-color"></i>
-                                    <i class="ti-star"></i>
-                                    <span>(4)</span>
-                                </div>
-                                <div class="ratting-author f-right">
-                                    <h3>farhana shuvo</h3>
-                                    <span>12:24</span>
-                                    <span>9 March 2018</span>
-                                </div>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nost rud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nost.</p>
-                        </div>
+                        {% endfor %}
                     </div>
                     <div class="ratting-form-wrapper">
                         <h3>Add your Comments :</h3>
                         <div class="ratting-form">
-                            <form action="#">
+                            <form method="post">
+                                {% csrf_token %}
                                 <div class="star-box">
                                     <h2>Rating:</h2>
                                     <div class="product-rating">
-                                        <i class="ti-star theme-color"></i>
-                                        <i class="ti-star theme-color"></i>
-                                        <i class="ti-star theme-color"></i>
-                                        <i class="ti-star"></i>
-                                        <i class="ti-star"></i>
-                                        <span>(3)</span>
+                                        {% for i in "12345" %}
+                                            <input type="radio" id="star{{ forloop.counter }}" name="rating" value="{{ forloop.counter }}">
+                                            <label for="star{{ forloop.counter }}" data-value="{{ forloop.counter }}">
+                                                <i class="ti-star"></i>
+                                            </label>
+                                        {% endfor %}
+                                        <span id="rating-value">(0)</span>
                                     </div>
                                 </div>
                                 <div class="row">
+                                    {% if not user.is_authenticated %}
                                     <div class="col-md-6">
                                         <div class="rating-form-style mb-20">
-                                            <input placeholder="Name" type="text">
+                                            {{ form.first_name }}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="rating-form-style mb-20">
-                                            <input placeholder="Email" type="text">
+                                            {{ form.last_name }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="rating-form-style mb-20">
+                                            {{ form.email }}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    <div class="col-md-12">
+                                        <div class="rating-form-style mb-20">
+                                            {{ form.review_text }}
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="rating-form-style form-submit">
-                                            <textarea name="message" placeholder="Message"></textarea>
-                                            <input type="submit" value="add review">
+                                            <input type="submit" value="Add Review">
                                         </div>
                                     </div>
                                 </div>

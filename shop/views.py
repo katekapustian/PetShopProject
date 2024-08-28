@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm, AddressUpdateForm
+from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm, AddressUpdateForm, ReviewForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .utils import ensure_profile_exists
@@ -16,6 +16,7 @@ from django.http import JsonResponse
 from django.utils.text import Truncator
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from django.db.models import Avg
 
 
 def index(request):
@@ -167,18 +168,36 @@ def logout_view(request):
 
 def product_details(request, id, slug):
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
-    categories = []
-    if product.food_category:
-        categories.append(product.food_category.name)
-    if product.pet_category:
-        categories.append(product.pet_category.name)
-    if product.brand:
-        categories.append(product.brand.name)
-    categories_string = " / ".join(categories)
+    reviews = product.reviews.all()
+    review_count = reviews.count()
+    overall_rating = reviews.aggregate(Avg('rating'))['rating__avg']
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, user=request.user)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.product = product
+            if request.user.is_authenticated:
+                review.user = request.user
+                review.first_name = request.user.first_name
+                review.last_name = request.user.last_name
+                review.email = request.user.email
+            review.save()
+            messages.success(request, 'Thank you for your review!')
+            return redirect('shop:product_detail', id=product.id, slug=product.slug)
+        else:
+            for field in form.errors:
+                for error in form.errors[field]:
+                    messages.error(request, error)
+    else:
+        form = ReviewForm(user=request.user)
 
     return render(request, 'shop/product-details.html', {
         'product': product,
-        'categories_string': categories_string
+        'form': form,
+        'reviews': reviews,
+        'overall_rating': overall_rating,
+        'review_count': review_count,
     })
 
 

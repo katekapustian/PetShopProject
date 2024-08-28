@@ -110,3 +110,17 @@ class NewsletterSubscription(models.Model):
 
     def __str__(self):
         return self.email
+
+
+class Review(models.Model):
+    product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    first_name = models.CharField(max_length=100, blank=True)
+    last_name = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(blank=True)
+    rating = models.IntegerField()
+    review_text = models.TextField(max_length=400)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Review by {self.first_name} {self.last_name} on {self.product.name}'

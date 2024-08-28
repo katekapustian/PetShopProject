@@ -4862,3 +4862,25 @@ input[type=number] {
     padding: 0 5px;
     display: inline-block;
 }
+input[type="radio"] {
+    display: none;
+}
+label i.ti-star {
+    font-size: 16px;
+    margin-right: 5px;
+    color: #ccc;
+    cursor: pointer;
+}
+label:hover ~ label i.ti-star,
+label:hover i.ti-star {
+    color: #7e4c4f;
+}
+input[type="radio"]:checked ~ label i.ti-star {
+    color: #ccc;
+}
+input[type="radio"]:checked + label i.ti-star {
+    color: #7e4c4f;
+}
+input[type="radio"]:checked + label ~ label i.ti-star {
+    color: #7e4c4f;
+}
