@@ -28,40 +28,40 @@
 </div>
 </div>
 <div class="food-category food-category-col pt-100 pb-60">
-<div class="container">
-<div class="row">
-    <div class="col-lg-4 col-md-4">
-        <div class="single-food-category cate-padding-1 text-center mb-30">
-            <div class="single-food-hover-2">
-                <img src="{% static 'shop/img/product/product-1.jpg' %}" alt="">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <div class="single-food-category cate-padding-1 text-center mb-30">
+                    <div class="single-food-hover-2">
+                        <img src="{% static 'shop/img/product/product-1.jpg' %}" alt="">
+                    </div>
+                    <div class="single-food-content">
+                        <h3><a href="{% url 'shop:shop_page_by_category' 'pet' 'dogs' %}" class="food-category-link">Dogs Food</a></h3>
+                    </div>
+                </div>
             </div>
-            <div class="single-food-content">
-                <h3>Dogs Food</h3>
+            <div class="col-lg-4 col-md-4">
+                <div class="single-food-category cate-padding-2 text-center mb-30">
+                    <div class="single-food-hover-2">
+                        <img src="{% static 'shop/img/product/product-2.jpg' %}" alt="">
+                    </div>
+                    <div class="single-food-content">
+                        <h3><a href="{% url 'shop:shop_page_by_category' 'pet' 'cats' %}" class="food-category-link">Cats Food</a></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="single-food-category cate-padding-3 text-center mb-30">
+                    <div class="single-food-hover-2">
+                        <img src="{% static 'shop/img/product/product-3.jpg' %}" alt="">
+                    </div>
+                    <div class="single-food-content">
+                        <h3><a href="{% url 'shop:shop_page_by_category' 'pet' 'fishes' %}" class="food-category-link">Fishes Food</a></h3>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-4 col-md-4">
-        <div class="single-food-category cate-padding-2 text-center mb-30">
-            <div class="single-food-hover-2">
-                <img src="{% static 'shop/img/product/product-2.jpg' %}" alt="">
-            </div>
-            <div class="single-food-content">
-                <h3>Cats Food</h3>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-4">
-        <div class="single-food-category cate-padding-3 text-center mb-30">
-            <div class="single-food-hover-2">
-                <img src="{% static 'shop/img/product/product-3.jpg' %}" alt="">
-            </div>
-            <div class="single-food-content">
-                <h3>Fishs Food</h3>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
 </div>
 <div class="product-area pt-95 pb-70 gray-bg">
     <div class="container">
@@ -108,85 +108,129 @@
         </div>
     </div>
 </div>
+{% if deal_of_the_week %}
 <div class="deal-area bg-img pt-95 pb-100">
-<div class="container">
-<div class="section-title text-center mb-50">
-    <h4>Best Product</h4>
-    <h2>Deal of the Week</h2>
-</div>
-<div class="row">
-    <div class="col-lg-6 col-md-6">
-        <div class="deal-img wow fadeInLeft">
-            <a href="#"><img src="{% static 'shop/img/banners/banner-2.png' %}" alt=""></a>
+    <div class="container">
+        <div class="section-title text-center mb-50">
+            <h4>Best Product</h4>
+            <h2>Deal of the Week</h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="deal-img wow fadeInLeft">
+                    <a href="{{ deal_of_the_week.product.get_absolute_url }}"><img src="{{ deal_of_the_week.product.image.url }}" alt="{{ deal_of_the_week.product.name }}"></a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="deal-content">
+                    <h3><a href="{{ deal_of_the_week.product.get_absolute_url }}">{{ deal_of_the_week.product.name }}</a></h3>
+                    <div class="deal-pro-price">
+                        {% if deal_of_the_week.product.old_price %}
+                        <span class="deal-old-price">${{ deal_of_the_week.product.old_price }}</span>
+                        {% endif %}
+                        <span>${{ deal_of_the_week.product.new_price }}</span>
+                    </div>
+                    <p>{{ deal_of_the_week.product.description|truncatechars:200 }}</p>
+                    <div class="timer timer-style">
+                        <div data-countdown="{{ deal_of_the_week.end_date|date:'Y/m/d H:i:s' }}"></div>
+                    </div>
+                    <div class="discount-btn mt-35">
+                        <a class="btn-style" href="{{ deal_of_the_week.product.get_absolute_url }}">SHOP NOW</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-lg-6 col-md-6">
-        <div class="deal-content">
-            <h3><a href="#">Name Your Product</a></h3>
-            <div class="deal-pro-price">
-                <span class="deal-old-price">$16.00 </span>
-                <span> $10.00</span>
-            </div>
-            <p>Lorem ipsum dolor sit amet, co adipisicing elit, sed do eiusmod tempor incididunt labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercita ullamco laboris nisi ut aliquip ex ea commodo </p>
-            <div class="timer timer-style">
-                <div data-countdown="2017/10/01"></div>
-            </div>
-            <div class="discount-btn mt-35">
-                <a class="btn-style" href="#">SHOP NOW</a>
-            </div>
-        </div>
-    </div>
 </div>
-</div>
-</div>
+{% endif %}
 <div class="testimonial-area pt-90 pb-70 bg-img" style="background-image:url('{% static 'shop/img/slider/slider-3.jpg' %}');">
-<div class="container">
-<div class="row">
-    <div class="col-lg-10 ml-auto mr-auto">
-        <div class="testimonial-wrap">
-            <div class="testimonial-text-slider text-center">
-                <div class="sin-testiText">
-                    <p>Lorem ipsum dolor sit amet, co adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercita ullamco laboris nisi ut aliquip ex ea commodo</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 ml-auto mr-auto">
+                <div class="testimonial-wrap">
+                    <div class="testimonial-text-slider text-center">
+                        <div class="sin-testiText">
+                            <p>Lola was abandoned as a kitten, but she didn't give up hope. Now, she's the queen of her new home, where she spends her days lounging in the sun and playing with her favorite toys. Lola's journey shows that every pet deserves a second chance.</p>
+                        </div>
+                        <div class="sin-testiText">
+                            <p>Muffin, a loyal dog who was left behind, found his forever home where he's now a cherished family member. His playful energy and protective nature have brought endless joy to his new owners.</p>
+                        </div>
+                        <div class="sin-testiText">
+                            <p>Lefty, once a stray wandering the streets, now enjoys his life as a well-loved indoor cat. His days are filled with comfort, companionship, and the occasional treat. His new family has given him a cozy bed and a world of love, where he no longer has to worry about where his next meal will come from.</p>
+                        </div>
+                        <div class="sin-testiText">
+                            <p>Sapphire was found injured and scared, but after receiving the care she needed, she was adopted by a loving family. Sapphire's story is a testament to the resilience and hope that every pet carries within them.</p>
+                        </div>
+                        <div class="sin-testiText">
+                            <p>Bella was found wandering the streets, weak and frightened. After being rescued, she was given the love and care she desperately needed. Now, Bella spends her days cuddling with her new family, who couldn't imagine life without her. Her playful spirit and gentle purrs remind everyone that she was meant to find her forever home.</p>
+                        </div>
+                         <div class="sin-testiText">
+                            <p>Noah, once abandoned and left behind, was shy and unsure of humans. But with patience and kindness, his trust was slowly restored. Today, Noah runs freely in his new backyard, playing fetch with his loving owners. His story is a reminder that even the most broken hearts can heal when shown unconditional love.</p>
+                        </div>
+                        <div class="sin-testiText">
+                            <p>Kiwi was rescued from a crowded shelter, where her chances of being adopted were slim. But fate had other plans. She was welcomed into a family who saw past her timid exterior. Now, Kiwi thrives in a home filled with warmth, where she’s cherished and adored. Her transformation is a beautiful testament to the power of love.</p>
+                        </div>
+                        <div class="sin-testiText">
+                            <p>Once a scared stray, Julius roamed the streets alone for months. But after being rescued, everything changed. Julius now enjoys long walks with his new family and has found his place as their loyal protector. His happy wagging tail is a daily reminder that every animal deserves a chance at happiness.</p>
+                        </div>
+                        <div class="sin-testiText">
+                            <p>Marmalade was discovered shivering in the cold, malnourished and afraid. After receiving much-needed care, Marmalade’s joyful personality began to shine. Marmalade’s journey from abandonment to belonging is proof that every pet has a bright future waiting for them.</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-image-slider text-center">
+                        <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Lola.jpg' %}" alt="">
+                            <h3>Lola</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                        <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Muffin.jpg' %}" alt="">
+                            <h3>Muffin</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                        <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Lefty.jpg' %}" alt="">
+                            <h3>Lefty</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                        <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Sapphire.jpg' %}" alt="">
+                            <h3>Sapphire</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                        <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Bella.jpg' %}" alt="">
+                            <h3>Bella</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                        <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Noah.jpg' %}" alt="">
+                            <h3>Noah</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                         <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Kiwi.jpg' %}" alt="">
+                            <h3>Kiwi</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                         <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Julius.jpg' %}" alt="">
+                            <h3>Julius</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                         <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Marmalade.jpg' %}" alt="">
+                            <h3>Marmalade</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                    </div>
+                    <div class="testimonial-shap">
+                        <img src="{% static 'shop/img/icon-img/testi-shap.png' %}" alt="">
+                    </div>
                 </div>
-                <div class="sin-testiText">
-                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or amro porano ja cai tomi tai go amro porano  amro porano ja cai tomi tai go  .... </p>
-                </div>
-                <div class="sin-testiText">
-                    <p>Lorem ipsum dolor sit amet, co adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercita ullamco laboris nisi ut aliquip ex ea commodo</p>
-                </div>
-                <div class="sin-testiText">
-                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or amro porano ja cai tomi tai go amro porano  amro porano ja cai tomi tai go  .... </p>
-                </div>
-            </div>
-            <div class="testimonial-image-slider text-center">
-                <div class="sin-testiImage">
-                    <img src="{% static 'shop/img/testi/3.jpg' %}" alt="">
-                    <h3>Robiul Islam</h3>
-                    <h5>Customer</h5>
-                </div>
-                <div class="sin-testiImage">
-                    <img src="{% static 'shop/img/testi/4.jpg' %}" alt="">
-                    <h3>Robiul Islam</h3>
-                    <h5>Customer</h5>
-                </div>
-                <div class="sin-testiImage">
-                    <img src="{% static 'shop/img/testi/3.jpg' %}" alt="">
-                    <h3>F. H. Shuvo</h3>
-                    <h5>Developer</h5>
-                </div>
-                <div class="sin-testiImage">
-                    <img src="{% static 'shop/img/testi/5.jpg' %}" alt="">
-                    <h3>T. T. Rayed</h3>
-                    <h5>CEO</h5>
-                </div>
-            </div>
-            <div class="testimonial-shap">
-                <img src="{% static 'shop/img/icon-img/testi-shap.png' %}" alt="">
             </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 <div class="service-area bg-img pt-100 pb-65">
 <div class="container">
@@ -216,61 +260,31 @@
 </div>
 </div>
 <div class="blog-area pb-70">
-<div class="container">
-<div class="section-title text-center mb-60">
-    <h4>Latest News</h4>
-    <h2>From Our Blog</h2>
-</div>
-<div class="row">
-    <div class="col-lg-4 col-md-6">
-        <div class="blog-wrapper mb-30 gray-bg">
-            <div class="blog-img hover-effect">
-                <a href="blog-details.html"><img alt="" src="{% static 'shop/img/blog/blog-1.jpg' %}"></a>
-            </div>
-            <div class="blog-content">
-                <div class="blog-meta">
-                    <ul>
-                        <li>By: <span>Admin</span></li>
-                        <li>Sep 14, 2018</li>
-                    </ul>
+    <div class="container">
+        <div class="section-title text-center mb-60">
+            <h4>Latest News</h4>
+            <h2>From Our Blog</h2>
+        </div>
+        <div class="row">
+            {% for post in latest_posts %}
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-wrapper mb-30 gray-bg">
+                    <div class="blog-img hover-effect">
+                        <a href="{% url 'blog:blog_details' post.id %}"><img alt="{{ post.title }}" src="{{ post.cover_image.url }}"></a>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <ul>
+                                <li>By: <span>{{ post.author.username }}</span></li>
+                                <li>{{ post.published_date|date:"F d, Y" }}</li>
+                            </ul>
+                        </div>
+                        <h4><a href="{% url 'blog:blog_details' post.id %}">{{ post.title }}</a></h4>
+                    </div>
                 </div>
-                <h4><a href="blog-details.html">Lorem ipsum dolor amet cons adipisicing elit</a></h4>
             </div>
+            {% endfor %}
         </div>
     </div>
-    <div class="col-lg-4 col-md-6">
-        <div class="blog-wrapper mb-30 gray-bg">
-            <div class="blog-img hover-effect">
-                <a href="blog-details.html"><img alt="" src="{% static 'shop/img/blog/blog-2.jpg' %}"></a>
-            </div>
-            <div class="blog-content">
-                <div class="blog-meta">
-                    <ul>
-                        <li>By: <span>Admin</span></li>
-                        <li>Sep 14, 2018</li>
-                    </ul>
-                </div>
-                <h4><a href="blog-details.html">Lorem ipsum dolor amet cons adipisicing elit</a></h4>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-6">
-        <div class="blog-wrapper mb-30 gray-bg">
-            <div class="blog-img hover-effect">
-                <a href="blog-details.html"><img alt="" src="{% static 'shop/img/blog/blog-3.jpg' %}"></a>
-            </div>
-            <div class="blog-content">
-                <div class="blog-meta">
-                    <ul>
-                        <li>By: <span>Admin</span></li>
-                        <li>Sep 14, 2018</li>
-                    </ul>
-                </div>
-                <h4><a href="blog-details.html">Lorem ipsum dolor amet cons adipisicing elit</a></h4>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
 </div>
 {% endblock %}

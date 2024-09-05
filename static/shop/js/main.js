@@ -31,7 +31,7 @@
         loop: true,
         navText: ['<i class="icon-arrow-left"></i>', '<i class="icon-arrow-right"></i>'],
         nav: true,
-        autoplay: false,
+        autoplay: true,
         autoplayTimeout: 5000,
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',

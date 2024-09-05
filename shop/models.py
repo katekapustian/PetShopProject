@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 from django.contrib.auth.models import User
+from django.utils import timezone
 from django.utils.crypto import get_random_string
 
 
@@ -93,6 +94,7 @@ class Profile(models.Model):
     city = models.CharField(max_length=100, blank=True)
     zip_code = models.CharField(max_length=20, blank=True)
     country = models.CharField(max_length=100, blank=True)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
 
     def __str__(self):
         return f'{self.user.username} Profile'
@@ -124,3 +126,28 @@ class Review(models.Model):
 
     def __str__(self):
         return f'Review by {self.first_name} {self.last_name} on {self.product.name}'
+
+
+class DealOfTheWeek(models.Model):
+    product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name='deal_of_the_week')
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+
+    def is_active(self):
+        now = timezone.now()
+        return self.start_date <= now <= self.end_date
+
+    def __str__(self):
+        return f"Deal: {self.product.name} ({self.start_date} - {self.end_date})"
+
+
+class ContactMessage(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    subject = models.CharField(max_length=255)
+    message = models.TextField()
+    sent_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Message from {self.first_name} {self.last_name}'

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Product, FoodCategory, PetCategory, Brand, Profile, NewsletterSubscription, Review
+from .models import Product, FoodCategory, PetCategory, Brand, Profile, NewsletterSubscription, Review, DealOfTheWeek, \
+    ContactMessage
 from django.contrib.auth.models import User
 
 
@@ -58,8 +59,20 @@ class ReviewAdmin(admin.ModelAdmin):
     list_filter = ('rating', 'created_at')
 
 
+class DealOfTheWeekAdmin(admin.ModelAdmin):
+    list_display = ('product', 'start_date', 'end_date', 'is_active')
+
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'email', 'subject', 'sent_at')
+    search_fields = ('first_name', 'last_name', 'email', 'subject')
+    list_filter = ('sent_at',)
+
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(FoodCategory, FoodCategoryAdmin)
 admin.site.register(PetCategory, PetCategoryAdmin)
 admin.site.register(Brand, BrandAdmin)
 admin.site.register(Profile, ProfileAdmin)
+admin.site.register(DealOfTheWeek, DealOfTheWeekAdmin)

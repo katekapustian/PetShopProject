@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'cart',
     'orders',
     'wishlist',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -127,6 +128,43 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+TINYMCE_DEFAULT_CONFIG = {
+    "height": "480px",
+    "width": "100%",
+    "menubar": "file edit view insert format tools table help",
+    "plugins": "advlist autolink lists link image charmap print preview hr anchor pagebreak "
+               "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media "
+               "nonbreaking save table contextmenu directionality emoticons template paste textcolor",
+    "toolbar": "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify "
+               "| bullist numlist outdent indent | link image | print preview media fullpage | "
+               "forecolor backcolor emoticons",
+    "image_advtab": True,
+    "file_picker_types": 'image',
+    "file_picker_callback": """
+    function(callback, value, meta) {
+        let input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.onchange = function() {
+            let file = this.files[0];
+            let reader = new FileReader();
+            reader.onload = function () {
+                let id = 'blobid' + (new Date()).getTime();
+                let blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                let base64 = reader.result.split(',')[1];
+                let blobInfo = blobCache.create(id, file, base64);
+                blobCache.add(blobInfo);
+                callback(blobInfo.blobUri(), { title: file.name });
+            };
+            reader.readAsDataURL(file);
+        };
+        input.click();
+    }
+    """,
+    "cleanup_on_startup": True,
+    "custom_undo_redo_levels": 20,
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

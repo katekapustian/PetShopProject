@@ -1,14 +1,14 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.http import url_has_allowed_host_and_scheme
-from .models import Product, FoodCategory, PetCategory, Brand, Profile, NewsletterSubscription
+from .models import Product, FoodCategory, PetCategory, Brand, Profile, NewsletterSubscription, DealOfTheWeek
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm, AddressUpdateForm, ReviewForm
+from .forms import UserRegistrationForm, UserUpdateForm, ProfileUpdateForm, AddressUpdateForm, ReviewForm, ContactForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .utils import ensure_profile_exists
@@ -17,13 +17,22 @@ from django.utils.text import Truncator
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.db.models import Avg
+from blog.models import Post
+from django.utils import timezone
 
 
 def index(request):
     latest_products = Product.objects.filter(available=True).order_by('-created')[:8]
+    latest_posts = Post.objects.order_by('-published_date')[:3]
+
+    deal_of_the_week = DealOfTheWeek.objects.filter(end_date__gte=timezone.now()).first()
+
     context = {
         'latest_products': latest_products,
+        'latest_posts': latest_posts,
+        'deal_of_the_week': deal_of_the_week,
     }
+
     return render(request, 'shop/index.html', context)
 
 
@@ -32,7 +41,23 @@ def about_us(request):
 
 
 def contact(request):
-    return render(request, 'shop/contact.html')
+    if request.method == 'POST':
+        form = ContactForm(request.POST, user=request.user)
+        if form.is_valid():
+            contact_message = form.save(commit=False)
+            if request.user.is_authenticated:
+                contact_message.first_name = request.user.first_name
+                contact_message.last_name = request.user.last_name
+                contact_message.email = request.user.email
+            contact_message.save()
+            messages.success(request, 'Your message has been sent successfully.')
+            return redirect('shop:contact')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = ContactForm(user=request.user)
+
+    return render(request, 'shop/contact.html', {'form': form})
 
 
 def login_register(request):
@@ -117,8 +142,11 @@ def my_account(request):
 def update_account(request):
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
-        profile_form = ProfileUpdateForm(request.POST, instance=request.user.profile)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         if user_form.is_valid() and profile_form.is_valid():
+            if 'remove_avatar' in request.POST:
+                request.user.profile.avatar.delete()
+                request.user.profile.avatar = None
             user_form.save()
             profile_form.save()
             messages.success(request, 'Your account information has been updated!')

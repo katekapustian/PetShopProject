@@ -1,202 +1,212 @@
 {% extends "shop/base.html" %}
 {% load static %}
+{% load shop_pagination_tags %}
 {% block content %}
 <div class="breadcrumb-area pt-95 pb-95 bg-img" style="background-image:url('{% static 'shop/img/banners/banner-2.jpg' %}');">
-    <div class="container">
-        <div class="breadcrumb-content text-center">
-            <h2>Shop Page</h2>
-            <ul>
-                <li><a href="{% url 'shop:index' %}">home</a></li>
-                <li class="active">Shop Page</li>
+<div class="container">
+<div class="breadcrumb-content text-center">
+<h2>Shop Page</h2>
+<ul>
+    <li><a href="{% url 'shop:index' %}">home</a></li>
+    <li class="active">Shop Page</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="shop-area pt-100 pb-100 gray-bg">
+<div class="container">
+<div class="row flex-row-reverse">
+<div class="col-lg-9">
+    <div class="shop-topbar-wrapper">
+        <div class="product-sorting-wrapper">
+            <div class="product-show shorting-style">
+                <label>Showing <span>{{ page_obj.start_index }}-{{ page_obj.end_index }}</span> of <span>{{ paginator.count }}</span> Results</label>
+                <form method="get" id="num_products_form">
+                    <select name="num_products_per_page" onchange="document.getElementById('num_products_form').submit();">
+                        <option value="6" {% if num_products_per_page == 6 %}selected{% endif %}>6</option>
+                        <option value="9" {% if num_products_per_page == 9 %}selected{% endif %}>9</option>
+                        <option value="12" {% if num_products_per_page == 12 %}selected{% endif %}>12</option>
+                    </select>
+                    {% if current_category and category_type %}
+                        <input type="hidden" name="category_type" value="{{ category_type }}">
+                        <input type="hidden" name="category_slug" value="{{ current_category.slug }}">
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+        <div class="grid-list-options">
+            <ul class="view-mode">
+                {% if current_category %}
+                <li><a href="{% url 'shop:shop_page_by_category' category_type current_category.slug %}?num_products_per_page={{ num_products_per_page }}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}"><i class="ti-layout-grid4-alt"></i></a></li>
+                <li class="active"><a href="{% url 'shop:shop_list_by_category' category_type current_category.slug %}?num_products_per_page={{ num_products_per_page }}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}"><i class="ti-align-justify"></i></a></li>
+                {% else %}
+                <li><a href="{% url 'shop:shop_page' %}?num_products_per_page={{ num_products_per_page }}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}"><i class="ti-layout-grid4-alt"></i></a></li>
+                <li class="active"><a href="{% url 'shop:shop_list' %}?num_products_per_page={{ num_products_per_page }}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}"><i class="ti-align-justify"></i></a></li>
+                {% endif %}
             </ul>
         </div>
     </div>
-</div>
-<div class="shop-area pt-100 pb-100 gray-bg">
-    <div class="container">
-        <div class="row flex-row-reverse">
-            <div class="col-lg-9">
-                <div class="shop-topbar-wrapper">
-                    <div class="product-sorting-wrapper">
-                        <div class="product-show shorting-style">
-                            <label>Showing <span>{{ page_obj.start_index }}-{{ page_obj.end_index }}</span> of <span>{{ paginator.count }}</span> Results</label>
-                            <form method="get" id="num_products_form">
-                                <select name="num_products_per_page" onchange="document.getElementById('num_products_form').submit();">
-                                    <option value="6" {% if num_products_per_page == 6 %}selected{% endif %}>6</option>
-                                    <option value="9" {% if num_products_per_page == 9 %}selected{% endif %}>9</option>
-                                    <option value="12" {% if num_products_per_page == 12 %}selected{% endif %}>12</option>
-                                </select>
-                                {% if current_category and category_type %}
-                                    <input type="hidden" name="category_type" value="{{ category_type }}">
-                                    <input type="hidden" name="category_slug" value="{{ current_category.slug }}">
+    <div class="grid-list-product-wrapper">
+        <div class="product-view product-list">
+            <div class="row">
+                {% for product in products %}
+                <div class="product-width col-lg-6 col-xl-4 col-md-6 col-sm-6">
+                    <div class="product-wrapper mb-10">
+                        <div class="product-img">
+                            <a href="{% url 'shop:product_detail' product.id product.slug %}">
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            </a>
+                            <div class="product-action">
+                                <a title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#" data-product-id="{{ product.id }}">
+                                    <i class="ti-plus"></i>
+                                </a>
+                                <a title="Add To Cart" href="{% url 'cart:cart_add' product.id %}">
+                                    <i class="ti-shopping-cart"></i>
+                                </a>
+                            </div>
+                            <div class="product-action-wishlist">
+                                {% if user.is_authenticated %}
+                                <a title="Wishlist" href="{% url 'wishlist:wishlist_add' product.id %}">
+                                    <i class="ti-heart"></i>
+                                </a>
                                 {% endif %}
-                            </form>
+                            </div>
                         </div>
-                    </div>
-                    <div class="grid-list-options">
-                        <ul class="view-mode">
-                            {% if current_category %}
-                            <li><a href="{% url 'shop:shop_page_by_category' category_type current_category.slug %}?num_products_per_page={{ num_products_per_page }}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}"><i class="ti-layout-grid4-alt"></i></a></li>
-                            <li class="active"><a href="{% url 'shop:shop_list_by_category' category_type current_category.slug %}?num_products_per_page={{ num_products_per_page }}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}"><i class="ti-align-justify"></i></a></li>
-                            {% else %}
-                            <li><a href="{% url 'shop:shop_page' %}?num_products_per_page={{ num_products_per_page }}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}"><i class="ti-layout-grid4-alt"></i></a></li>
-                            <li class="active"><a href="{% url 'shop:shop_list' %}?num_products_per_page={{ num_products_per_page }}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}"><i class="ti-align-justify"></i></a></li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </div>
-                <div class="grid-list-product-wrapper">
-                    <div class="product-view product-list">
-                        <div class="row">
-                            {% for product in products %}
-                            <div class="product-width col-lg-6 col-xl-4 col-md-6 col-sm-6">
-                                <div class="product-wrapper mb-10">
-                                    <div class="product-img">
-                                        <a href="{% url 'shop:product_detail' product.id product.slug %}">
-                                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                                        </a>
-                                        <div class="product-action">
-                                            <a title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#" data-product-id="{{ product.id }}">
-                                                <i class="ti-plus"></i>
-                                            </a>
-                                            <a title="Add To Cart" href="{% url 'cart:cart_add' product.id %}">
-                                                <i class="ti-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                        <div class="product-action-wishlist">
-                                            {% if user.is_authenticated %}
-                                            <a title="Wishlist" href="{% url 'wishlist:wishlist_add' product.id %}">
-                                                <i class="ti-heart"></i>
-                                            </a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="product-content">
-                                        <h4><a href="{% url 'shop:product_detail' product.id product.slug %}">{{ product.name }}</a></h4>
-                                        <div class="product-price">
-                                            <span class="new">${{ product.new_price }}&nbsp;&nbsp;</span>
-                                            {% if product.old_price %}
-                                            <span class="old">${{ product.old_price }}</span>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                    <div class="product-list-content">
-                                        <h4><a href="{% url 'shop:product_detail' product.id product.slug %}">{{ product.name }}</a></h4>
-                                        <div class="product-price">
-                                            <span class="new">${{ product.new_price }}&nbsp;&nbsp;</span>
-                                            {% if product.old_price %}
-                                            <span class="old">${{ product.old_price }}</span>
-                                            {% endif %}
-                                        </div>
-                                        <p>{{ product.description|linebreaksbr|truncatewords:20 }}</p>
-                                        <div class="product-list-action">
-                                            <div class="product-list-action-left">
-                                                <a class="addtocart-btn" title="Add to cart" href="{% url 'cart:cart_add' product.id %}">
-                                                    <i class="ion-bag"></i> Add to cart
-                                                </a>
-                                            </div>
-                                            <div class="product-list-action-right">
-                                                {% if user.is_authenticated %}
-                                                <a title="Wishlist" href="{% url 'wishlist:wishlist_add' product.id %}">
-                                                    <i class="ti-heart"></i>
-                                                </a>
-                                                {% endif %}
-                                                <a title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#" data-product-id="{{ product.id }}"><i class="ti-plus"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="product-content">
+                            <h4><a href="{% url 'shop:product_detail' product.id product.slug %}">{{ product.name }}</a></h4>
+                            <div class="product-price">
+                                <span class="new">${{ product.new_price }}&nbsp;&nbsp;</span>
+                                {% if product.old_price %}
+                                <span class="old">${{ product.old_price }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="product-list-content">
+                            <h4><a href="{% url 'shop:product_detail' product.id product.slug %}">{{ product.name }}</a></h4>
+                            <div class="product-price">
+                                <span class="new">${{ product.new_price }}&nbsp;&nbsp;</span>
+                                {% if product.old_price %}
+                                <span class="old">${{ product.old_price }}</span>
+                                {% endif %}
+                            </div>
+                            <p>{{ product.description|linebreaksbr|truncatewords:20 }}</p>
+                            <div class="product-list-action">
+                                <div class="product-list-action-left">
+                                    <a class="addtocart-btn" title="Add to cart" href="{% url 'cart:cart_add' product.id %}">
+                                        <i class="ion-bag"></i> Add to cart
+                                    </a>
+                                </div>
+                                <div class="product-list-action-right">
+                                    {% if user.is_authenticated %}
+                                    <a title="Wishlist" href="{% url 'wishlist:wishlist_add' product.id %}">
+                                        <i class="ti-heart"></i>
+                                    </a>
+                                    {% endif %}
+                                    <a title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#" data-product-id="{{ product.id }}"><i class="ti-plus"></i></a>
                                 </div>
                             </div>
-                            {% endfor %}
-                        </div>
-                        <div class="pagination-style text-center mt-10">
-                            <ul>
-                                {% if page_obj.has_previous %}
-                                <li><a href="?page={{ page_obj.previous_page_number }}&num_products_per_page={{ num_products_per_page }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.view_type %}&view_type={{ request.GET.view_type }}{% endif %}"><i class="icon-arrow-left"></i></a></li>
-                                {% endif %}
-                                {% for num in page_obj.paginator.page_range %}
-                                {% if page_obj.number == num %}
-                                <li class="active"><a href="#">{{ num }}</a></li>
-                                {% else %}
-                                <li><a href="?page={{ num }}&num_products_per_page={{ num_products_per_page }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.view_type %}&view_type={{ request.GET.view_type }}{% endif %}">{{ num }}</a></li>
-                                {% endif %}
-                                {% endfor %}
-                                {% if page_obj.has_next %}
-                                <li><a href="?page={{ page_obj.next_page_number }}&num_products_per_page={{ num_products_per_page }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}{% if request.GET.view_type %}&view_type={{ request.GET.view_type }}{% endif %}"><i class="icon-arrow-right"></i></a></li>
-                                {% endif %}
-                            </ul>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            <div class="col-lg-3">
-                <div class="shop-sidebar">
-                    <div class="shop-widget">
-                        <h4 class="shop-sidebar-title">Search Products</h4>
-                        <div class="shop-search mt-25 mb-50">
-                            <form method="get" action="{% url 'shop:search_products' %}">
-                                <input type="text" name="q" placeholder="Find a product" value="{{ request.GET.q }}">
-                                <input type="hidden" name="view_type" value="list">
-                                <button type="submit">
-                                    <i class="icon-magnifier"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="shop-widget">
-                        <h4 class="shop-sidebar-title">Filter By Price</h4>
-                        <div class="price_filter mt-25">
-                            <form method="get" action="{% if current_category %}{% url 'shop:shop_list_by_category' category_type current_category.slug %}{% else %}{% url 'shop:shop_list' %}{% endif %}">
-                                <div id="slider-range"></div>
-                                <div class="price_slider_amount">
-                                    <div class="label-input">
-                                        <label>price : </label>
-                                        <input type="text" id="amount" name="price" placeholder="Add Your Price" />
-                                        <input type="hidden" id="min_price" name="min_price" value="{{ request.GET.min_price }}">
-                                        <input type="hidden" id="max_price" name="max_price" value="{{ request.GET.max_price }}">
-                                        {% if current_category and category_type %}
-                                            <input type="hidden" name="category_type" value="{{ category_type }}">
-                                            <input type="hidden" name="category_slug" value="{{ current_category.slug }}">
-                                        {% endif %}
-                                    </div>
-                                    <button type="submit">Filter</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="shop-widget mt-50">
-                        <h4 class="shop-sidebar-title">Food Category</h4>
-                        <div class="shop-list-style mt-20">
-                            <ul>
-                                {% for food_category in food_categories %}
-                                <li><a href="{% url 'shop:shop_list_by_category' 'food' food_category.slug %}">{{ food_category.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="shop-widget mt-50">
-                        <h4 class="shop-sidebar-title">Pet Category</h4>
-                        <div class="shop-list-style mt-20">
-                            <ul>
-                                {% for pet_category in pet_categories %}
-                                <li><a href="{% url 'shop:shop_list_by_category' 'pet' pet_category.slug %}">{{ pet_category.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="shop-widget mt-50">
-                        <h4 class="shop-sidebar-title">Top Brands</h4>
-                        <div class="shop-list-style mt-20">
-                            <ul>
-                                {% for brand in brands %}
-                                <li><a href="{% url 'shop:shop_list_by_category' 'brand' brand.slug %}">{{ brand.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+            <div class="pagination-style text-center mt-10">
+                <ul>
+                    {% if page_obj.has_previous %}
+                    <li>
+                        <a href="?page={{ page_obj.previous_page_number }}&num_products_per_page={{ num_products_per_page }}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}"><i class="icon-arrow-left"></i></a>
+                    </li>
+                    {% endif %}
+
+                    {% get_pagination_range page_obj as pagination_range %}
+                    {% for page_num in pagination_range %}
+                        {% if page_num == '...' %}
+                            <li><span>...</span></li>
+                        {% else %}
+                            <li {% if page_num == page_obj.number %}class="active"{% endif %}>
+                                <a href="?page={{ page_num }}&num_products_per_page={{ num_products_per_page }}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}">{{ page_num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <li>
+                        <a href="?page={{ page_obj.next_page_number }}&num_products_per_page={{ num_products_per_page }}{% if request.GET.min_price %}&min_price={{ request.GET.min_price }}{% endif %}{% if request.GET.max_price %}&max_price={{ request.GET.max_price }}{% endif %}"><i class="icon-arrow-right"></i></a>
+                    </li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </div>
+</div>
+<div class="col-lg-3">
+    <div class="shop-sidebar">
+        <div class="shop-widget">
+            <h4 class="shop-sidebar-title">Search Products</h4>
+            <div class="shop-search mt-25 mb-50">
+                <form method="get" action="{% url 'shop:search_products' %}">
+                    <input type="text" name="q" placeholder="Find a product" value="{{ request.GET.q }}">
+                    <input type="hidden" name="view_type" value="list">
+                    <button type="submit">
+                        <i class="icon-magnifier"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="shop-widget">
+            <h4 class="shop-sidebar-title">Filter By Price</h4>
+            <div class="price_filter mt-25">
+                <form method="get" action="{% if current_category %}{% url 'shop:shop_list_by_category' category_type current_category.slug %}{% else %}{% url 'shop:shop_list' %}{% endif %}">
+                    <div id="slider-range"></div>
+                    <div class="price_slider_amount">
+                        <div class="label-input">
+                            <label>price : </label>
+                            <input type="text" id="amount" name="price" placeholder="Add Your Price" />
+                            <input type="hidden" id="min_price" name="min_price" value="{{ request.GET.min_price }}">
+                            <input type="hidden" id="max_price" name="max_price" value="{{ request.GET.max_price }}">
+                            {% if current_category and category_type %}
+                                <input type="hidden" name="category_type" value="{{ category_type }}">
+                                <input type="hidden" name="category_slug" value="{{ current_category.slug }}">
+                            {% endif %}
+                        </div>
+                        <button type="submit">Filter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="shop-widget mt-50">
+            <h4 class="shop-sidebar-title">Food Category</h4>
+            <div class="shop-list-style mt-20">
+                <ul>
+                    {% for food_category in food_categories %}
+                    <li><a href="{% url 'shop:shop_list_by_category' 'food' food_category.slug %}">{{ food_category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="shop-widget mt-50">
+            <h4 class="shop-sidebar-title">Pet Category</h4>
+            <div class="shop-list-style mt-20">
+                <ul>
+                    {% for pet_category in pet_categories %}
+                    <li><a href="{% url 'shop:shop_list_by_category' 'pet' pet_category.slug %}">{{ pet_category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="shop-widget mt-50">
+            <h4 class="shop-sidebar-title">Top Brands</h4>
+            <div class="shop-list-style mt-20">
+                <ul>
+                    {% for brand in brands %}
+                    <li><a href="{% url 'shop:shop_list_by_category' 'brand' brand.slug %}">{{ brand.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
 </div>
 {% endblock %}

@@ -2,238 +2,293 @@
 {% load static %}
 {% block content %}
 <div class="breadcrumb-area pt-95 pb-95 bg-img" style="background-image:url('{% static 'shop/img/banners/banner-2.jpg' %}');">
-<div class="container">
-<div class="breadcrumb-content text-center">
-    <h2>About Us</h2>
-    <ul>
-        <li><a href="index.html">home</a></li>
-        <li class="active">About Us</li>
-    </ul>
-</div>
-</div>
+    <div class="container">
+        <div class="breadcrumb-content text-center">
+            <h2>About Us</h2>
+            <ul>
+                <li><a href="{% url 'shop:index' %}">home</a></li>
+                <li class="active">About Us</li>
+            </ul>
+        </div>
+    </div>
 </div>
 <div class="about-us-area pt-100 pb-100">
-<div class="container">
-<div class="row">
-    <div class="col-lg-6 col-md-6">
-        <div class="about-us-img pr-30 wow fadeInLeft">
-            <img alt="" src="{% static 'shop/img/banners/banner-3.png' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="about-us-img pr-30 wow fadeInLeft">
+                    <img alt="" src="{% static 'shop/img/banners/banner-3.png' %}">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 d-flex align-items-center">
+                <div class="about-us-content">
+                    <h2>About Our Pet Shop</h2>
+                    <p>Welcome to our Pet Shop, where the health and happiness of your beloved pets are our top priority. We offer a carefully curated selection of healthy foods, supplements, and vitamins, all designed to keep your pets in the best possible shape. But we're not just about selling products – we're also committed to giving back. For every purchase made on our site, a portion of the proceeds goes towards feeding homeless animals, ensuring they too get the care and nourishment they deserve.</p>
+                    <div style="margin-top: 30px;">
+                        <h3>Our Community Impact</h3>
+                        <p>Thanks to your support, we've been able to provide thousands of meals to homeless animals in shelters and on the streets. Every time you shop with us, you're not just taking care of your own pets; you're also helping us take care of those less fortunate. Together, we can make a difference, one meal at a time.</p>
+                    </div>
+                    <div style="margin-top: 30px;">
+                        <h3>Our Vision</h3>
+                        <p>We believe that every pet deserves a happy and healthy life. Our mission is to make that vision a reality, not just for the pets in our homes, but for all animals. Through our blog, we share tips, advice, and stories that promote the well-being of pets everywhere. Join us in our mission to create a world where every pet is loved and cared for!</p>
+                    </div>
+                    <div class="about-us-btn" style="margin-top: 30px;">
+                        <a class="btn-style" href="{% url 'shop:contact' %}">CONTACT US</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-lg-6 col-md-6 d-flex align-items-center">
-        <div class="about-us-content">
-            <h2>About Marten</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipis elit, sed do eiusmod tempor incididu ut labore et dolore magna aliqua. Ut enim ad minim  quis nostrud exercitat ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <div class="about-us-list">
-                <ul>
-                    <li>There are many variations of passages</li>
-                    <li>Contrary to popular belief is not simply</li>
-                    <li>But I must explain to you how all this mistaken </li>
-                </ul>
-            </div>
-            <div class="about-us-btn">
-                <a class="btn-style" href="#">CONTACT US</a>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
 </div>
 <div class="project-count-area pb-70 pt-100 gray-bg">
-<div class="container">
-<div class="row">
-    <div class="col-lg-3 col-md-3 col-sm-6 col-12">
-        <div class="single-count mb-30 text-center">
-            <h2 class="count">18</h2>
-            <span>Years in Business</span>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12">
+                <div class="single-count mb-30 text-center">
+                    <h2 class="count">10</h2>
+                    <span>Years in Business</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12">
+                <div class="single-count mb-30 text-center">
+                    <h2 class="count">10000</h2>
+                    <span>Happy Pets</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12">
+                <div class="single-count mb-30 text-center">
+                    <h2 class="count">24000</h2>
+                    <span>Meals Donated</span>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-12">
+                <div class="single-count mb-30 text-center">
+                    <h2 class="count">17</h2>
+                    <span>Award Winning</span>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-3 col-sm-6 col-12">
-        <div class="single-count mb-30 text-center">
-            <h2 class="count">290</h2>
-            <span>Happy People</span>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-3 col-sm-6 col-12">
-        <div class="single-count mb-30 text-center">
-            <h2 class="count">24</h2>
-            <span>Billion Sales</span>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-3 col-sm-6 col-12">
-        <div class="single-count mb-30 text-center">
-            <h2 class="count">17</h2>
-            <span>Award Winning</span>
-        </div>
-    </div>
-</div>
-</div>
 </div>
 <div class="testimonial-area pt-90 pb-70 bg-img" style="background-image:url('{% static 'shop/img/slider/slider-3.jpg' %}');">
-<div class="container">
-<div class="row">
-    <div class="col-lg-10 ml-auto mr-auto">
-        <div class="testimonial-wrap">
-            <div class="testimonial-text-slider text-center">
-                <div class="sin-testiText">
-                    <p>Lorem ipsum dolor sit amet, co adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercita ullamco laboris nisi ut aliquip ex ea commodo</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 ml-auto mr-auto">
+                <div class="testimonial-wrap">
+                    <div class="testimonial-text-slider text-center">
+                        <div class="sin-testiText">
+                            <p>Lola was abandoned as a kitten, but she didn't give up hope. Now, she's the queen of her new home, where she spends her days lounging in the sun and playing with her favorite toys. Lola's journey shows that every pet deserves a second chance.</p>
+                        </div>
+                        <div class="sin-testiText">
+                            <p>Muffin, a loyal dog who was left behind, found his forever home where he's now a cherished family member. His playful energy and protective nature have brought endless joy to his new owners.</p>
+                        </div>
+                        <div class="sin-testiText">
+                            <p>Lefty, once a stray wandering the streets, now enjoys his life as a well-loved indoor cat. His days are filled with comfort, companionship, and the occasional treat. His new family has given him a cozy bed and a world of love, where he no longer has to worry about where his next meal will come from.</p>
+                        </div>
+                        <div class="sin-testiText">
+                            <p>Sapphire was found injured and scared, but after receiving the care she needed, she was adopted by a loving family. Sapphire's story is a testament to the resilience and hope that every pet carries within them.</p>
+                        </div>
+                        <div class="sin-testiText">
+                            <p>Bella was found wandering the streets, weak and frightened. After being rescued, she was given the love and care she desperately needed. Now, Bella spends her days cuddling with her new family, who couldn't imagine life without her. Her playful spirit and gentle purrs remind everyone that she was meant to find her forever home.</p>
+                        </div>
+                         <div class="sin-testiText">
+                            <p>Noah, once abandoned and left behind, was shy and unsure of humans. But with patience and kindness, his trust was slowly restored. Today, Noah runs freely in his new backyard, playing fetch with his loving owners. His story is a reminder that even the most broken hearts can heal when shown unconditional love.</p>
+                        </div>
+                        <div class="sin-testiText">
+                            <p>Kiwi was rescued from a crowded shelter, where her chances of being adopted were slim. But fate had other plans. She was welcomed into a family who saw past her timid exterior. Now, Kiwi thrives in a home filled with warmth, where she’s cherished and adored. Her transformation is a beautiful testament to the power of love.</p>
+                        </div>
+                        <div class="sin-testiText">
+                            <p>Once a scared stray, Julius roamed the streets alone for months. But after being rescued, everything changed. Julius now enjoys long walks with his new family and has found his place as their loyal protector. His happy wagging tail is a daily reminder that every animal deserves a chance at happiness.</p>
+                        </div>
+                        <div class="sin-testiText">
+                            <p>Marmalade was discovered shivering in the cold, malnourished and afraid. After receiving much-needed care, Marmalade’s joyful personality began to shine. Marmalade’s journey from abandonment to belonging is proof that every pet has a bright future waiting for them.</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-image-slider text-center">
+                        <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Lola.jpg' %}" alt="">
+                            <h3>Lola</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                        <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Muffin.jpg' %}" alt="">
+                            <h3>Muffin</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                        <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Lefty.jpg' %}" alt="">
+                            <h3>Lefty</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                        <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Sapphire.jpg' %}" alt="">
+                            <h3>Sapphire</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                        <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Bella.jpg' %}" alt="">
+                            <h3>Bella</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                        <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Noah.jpg' %}" alt="">
+                            <h3>Noah</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                         <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Kiwi.jpg' %}" alt="">
+                            <h3>Kiwi</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                         <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Julius.jpg' %}" alt="">
+                            <h3>Julius</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                         <div class="sin-testiImage">
+                            <img src="{% static 'shop/img/testi/Marmalade.jpg' %}" alt="">
+                            <h3>Marmalade</h3>
+                            <h5>Rescued And Adopted</h5>
+                        </div>
+                    </div>
+                    <div class="testimonial-shap">
+                        <img src="{% static 'shop/img/icon-img/testi-shap.png' %}" alt="">
+                    </div>
                 </div>
-                <div class="sin-testiText">
-                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or amro porano ja cai tomi tai go amro porano  amro porano ja cai tomi tai go  .... </p>
-                </div>
-                <div class="sin-testiText">
-                    <p>Lorem ipsum dolor sit amet, co adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercita ullamco laboris nisi ut aliquip ex ea commodo</p>
-                </div>
-                <div class="sin-testiText">
-                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or amro porano ja cai tomi tai go amro porano  amro porano ja cai tomi tai go  .... </p>
-                </div>
-            </div>
-            <div class="testimonial-image-slider text-center">
-                <div class="sin-testiImage">
-                    <img src="{% static 'shop/img/testi/3.jpg' %}" alt="">
-                    <h3>Samia Robiul</h3>
-                    <h5>Customer</h5>
-                </div>
-                <div class="sin-testiImage">
-                    <img src="{% static 'shop/img/testi/4.jpg' %}" alt="">
-                    <h3>Samia Robiul</h3>
-                    <h5>Customer</h5>
-                </div>
-                <div class="sin-testiImage">
-                    <img src="{% static 'shop/img/testi/3.jpg' %}" alt="">
-                    <h3>F H Shuvo</h3>
-                    <h5>Developer</h5>
-                </div>
-                <div class="sin-testiImage">
-                    <img src="{% static 'shop/img/testi/5.jpg' %}" alt="">
-                    <h3>T T Rayed</h3>
-                    <h5>CEO</h5>
-                </div>
-            </div>
-            <div class="testimonial-shap">
-                <img src="{% static 'shop/img/icon-img/testi-shap.png' %}" alt="">
             </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 <div class="team-ara pt-95 pb-70">
-<div class="container">
-<div class="section-title text-center mb-55">
-    <h2>Our Team</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing</p>
-</div>
-<div class="row">
-    <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="team-wrapper mb-30">
-            <div class="team-img">
-                <a href="#">
-                    <img src="{% static 'shop/img/team/team-1.jpg' %}" alt="">
-                </a>
-                <div class="team-social">
-                    <a href="#">
-                        <i class="ti-facebook"></i>
-                    </a>
-                    <a href="#">
-                        <i class="ti-pinterest"></i>
-                    </a>
-                    <a href="#">
-                        <i class="ti-twitter-alt"></i>
-                    </a>
-                    <a href="#">
-                        <i class="ti-instagram"></i>
-                    </a>
+    <div class="container">
+        <div class="section-title text-center mb-55">
+            <h2>Meet Our Team</h2>
+            <div style="margin-top: 20px;">
+            <p>Our dedicated team works tirelessly to ensure the health and happiness of your pets. Get to know the people who make it all happen!</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="team-wrapper mb-30">
+                    <div class="team-img">
+                        <a href="#">
+                            <img src="{% static 'shop/img/team/team-2.jpg' %}" alt="">
+                        </a>
+                        <div class="team-social">
+                            <a href="#">
+                                <i class="ti-facebook"></i>
+                            </a>
+                            <a href="#">
+                                <i class="ti-pinterest"></i>
+                            </a>
+                            <a href="#">
+                                <i class="ti-twitter-alt"></i>
+                            </a>
+                            <a href="#">
+                                <i class="ti-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="team-content text-center">
+                        <h4>Adam Jonson</h4>
+                        <span>Customer Support</span>
+                        <div style="margin-top: 10px;">
+                        <p>Adam has been with us for over 5 years, providing exceptional customer service and ensuring that all your queries are answered promptly.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="team-content text-center">
-                <h4>Adam Jonson</h4>
-                <span>Customer </span>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="team-wrapper mb-30">
+                    <div class="team-img">
+                        <a href="#">
+                            <img src="{% static 'shop/img/team/team-3.jpg' %}" alt="">
+                        </a>
+                        <div class="team-social">
+                            <a href="#">
+                                <i class="ti-facebook"></i>
+                            </a>
+                            <a href="#">
+                                <i class="ti-pinterest"></i>
+                            </a>
+                            <a href="#">
+                                <i class="ti-twitter-alt"></i>
+                            </a>
+                            <a href="#">
+                                <i class="ti-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="team-content text-center">
+                        <h4>Rose Evans</h4>
+                        <span>Store Manager</span>
+                        <div style="margin-top: 10px;">
+                        <p>Rose oversees our operations, making sure that our store is always stocked with the best products for your pets.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="team-wrapper mb-30">
+                    <div class="team-img">
+                        <a href="#">
+                            <img src="{% static 'shop/img/team/team-4.jpg' %}" alt="">
+                        </a>
+                        <div class="team-social">
+                            <a href="#">
+                                <i class="ti-facebook"></i>
+                            </a>
+                            <a href="#">
+                                <i class="ti-pinterest"></i>
+                            </a>
+                            <a href="#">
+                                <i class="ti-twitter-alt"></i>
+                            </a>
+                            <a href="#">
+                                <i class="ti-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="team-content text-center">
+                        <h4>Bruce Cole</h4>
+                        <span>Marketing Specialist</span>
+                        <div style="margin-top: 10px;">
+                        <p>Bruce is passionate about spreading the word about our mission and connecting with our community of pet lovers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="team-wrapper mb-30">
+                    <div class="team-img">
+                        <a href="#">
+                            <img src="{% static 'shop/img/team/team-1.jpg' %}" alt="">
+                        </a>
+                        <div class="team-social">
+                            <a href="#">
+                                <i class="ti-facebook"></i>
+                            </a>
+                            <a href="#">
+                                <i class="ti-pinterest"></i>
+                            </a>
+                            <a href="#">
+                                <i class="ti-twitter-alt"></i>
+                            </a>
+                            <a href="#">
+                                <i class="ti-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="team-content text-center">
+                        <h4>Debra Lane</h4>
+                        <span>Veterinary Consultant</span>
+                        <div style="margin-top: 10px;">
+                        <p>Debra provides expert advice on the health and nutrition of pets, ensuring that our product offerings meet the highest standards.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="team-wrapper mb-30">
-            <div class="team-img">
-                <a href="#">
-                    <img src="{% static 'shop/img/team/team-2.jpg' %}" alt="">
-                </a>
-                <div class="team-social">
-                    <a href="#">
-                        <i class="ti-facebook"></i>
-                    </a>
-                    <a href="#">
-                        <i class="ti-pinterest"></i>
-                    </a>
-                    <a href="#">
-                        <i class="ti-twitter-alt"></i>
-                    </a>
-                    <a href="#">
-                        <i class="ti-instagram"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="team-content text-center">
-                <h4>Rose Evans</h4>
-                <span>Manager </span>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="team-wrapper mb-30">
-            <div class="team-img">
-                <a href="#">
-                    <img src="{% static 'shop/img/team/team-3.jpg' %}" alt="">
-                </a>
-                <div class="team-social">
-                    <a href="#">
-                        <i class="ti-facebook"></i>
-                    </a>
-                    <a href="#">
-                        <i class="ti-pinterest"></i>
-                    </a>
-                    <a href="#">
-                        <i class="ti-twitter-alt"></i>
-                    </a>
-                    <a href="#">
-                        <i class="ti-instagram"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="team-content text-center">
-                <h4>Bruce Cole</h4>
-                <span>Customer </span>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="team-wrapper mb-30">
-            <div class="team-img">
-                <a href="#">
-                    <img src="{% static 'shop/img/team/team-4.jpg' %}" alt="">
-                </a>
-                <div class="team-social">
-                    <a href="#">
-                        <i class="ti-facebook"></i>
-                    </a>
-                    <a href="#">
-                        <i class="ti-pinterest"></i>
-                    </a>
-                    <a href="#">
-                        <i class="ti-twitter-alt"></i>
-                    </a>
-                    <a href="#">
-                        <i class="ti-instagram"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="team-content text-center">
-                <h4>Debra Lane</h4>
-                <span>Manager </span>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
 </div>
 {% endblock %}

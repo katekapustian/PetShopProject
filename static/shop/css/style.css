@@ -4884,3 +4884,56 @@ input[type="radio"]:checked + label i.ti-star {
 input[type="radio"]:checked + label ~ label i.ti-star {
     color: #7e4c4f;
 }
+.profile-avatar img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+.upload-btn {
+    background-color: #d8d8d8;
+    border: medium none;
+    border-radius: 50px;
+    color: #000101;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 13px 20px;
+    text-transform: uppercase;
+    transition: all 0.3s ease 0s;
+    display: inline-block;
+}
+.upload-btn:hover {
+    background-color: #7e4c4f;
+    color: #fff;
+}
+.form-check-input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+.form-check-label {
+    font-weight: 600;
+    padding-left: 10px;
+    vertical-align: middle;
+}
+.form-check {
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+.billing-info {
+    margin-top: 20px;
+}
+.rounded-avatar {
+    border-radius: 50%;
+    object-fit: cover;
+}
+#random-quote {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+#random-quote:hover {
+    color: #f0c040;
+}
