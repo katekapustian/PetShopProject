@@ -73,7 +73,7 @@
                             </div>
                         </div>
                         <div class="product-content">
-                            <h4><a href="{% url 'shop:product_detail' product.id product.slug %}">{{ product.name|truncatewords:7 }}</a></h4>
+                            <h4><a href="{% url 'shop:product_detail' product.id product.slug %}">{{ product.name|truncatewords:6 }}</a></h4>
                             <div class="product-price">
                                 <span class="new">${{ product.new_price }}&nbsp;&nbsp;</span>
                                 {% if product.old_price %}

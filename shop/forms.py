@@ -51,7 +51,7 @@ class ReviewForm(forms.ModelForm):
         model = Review
         fields = ['first_name', 'last_name', 'email', 'rating', 'review_text']
         widgets = {
-            'first_name': forms.TextInput(attrs={'placeholder': 'Name'}),
+            'first_name': forms.TextInput(attrs={'placeholder': 'First Name'}),
             'last_name': forms.TextInput(attrs={'placeholder': 'Last Name'}),
             'email': forms.EmailInput(attrs={'placeholder': 'Email'}),
             'review_text': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Message'}),
@@ -60,10 +60,21 @@ class ReviewForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
+
         if user and user.is_authenticated:
             self.fields['first_name'].initial = user.first_name
             self.fields['last_name'].initial = user.last_name
             self.fields['email'].initial = user.email
+            self.fields['first_name'].required = False
+            self.fields['last_name'].required = False
+            self.fields['email'].required = False
+            self.fields['first_name'].widget.attrs['readonly'] = True
+            self.fields['last_name'].widget.attrs['readonly'] = True
+            self.fields['email'].widget.attrs['readonly'] = True
+        else:
+            self.fields['first_name'].required = True
+            self.fields['last_name'].required = True
+            self.fields['email'].required = True
 
     def clean_rating(self):
         rating = self.cleaned_data.get('rating')
